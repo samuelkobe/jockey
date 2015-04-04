@@ -1,77 +1,114 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
 <html>
   <head>
-    <title>Traaaaaacks</title>
+    <title>Jockey</title>
     <meta http-equiv="X-UA-Compatible" content="IE=9">
 
     <!-- Load the RealTime libraries. -->
-    <script type="text/javascript"
-            src="https://apis.google.com/js/api.js"></script>
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
     <!-- Load the utility library. -->
-    <script type="text/javascript"
-            src="js/realtime-client-utils.js"></script>
+    <script type="text/javascript" src="js/realtime-client-utils.js"></script>
 
-    <script type="text/javascript" src="js/realtimecube.js"></script>
+    <!-- Load our custom js/rt options for Jockey. -->
+    <script type="text/javascript" src="js/jockey.js"></script>
 
-  	<meta charset="utf-8" />
-  	<script src="cube3d/js/oz.js"></script>
-  	<script src="cube3d/js/css3.oz.js"></script>
-  	<script src="cube3d/js/rubik.js"></script>
-  	<script src="cube3d/js/quaternion.js"></script>
-  	<link rel="stylesheet" href="cube3d/css/style.css" />
-  	<meta name="viewport" content="width=device-width" />
-  </head>
+    <!-- Setting styles, js & other meta tags -->
+  	<link rel="stylesheet" href="css/style.css" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+      <meta name="theme-color" content="#06D6A0">
+      <meta name="apple-mobile-web-app-capable" content="yes">
+      <meta name="android-mobile-web-app-capable" content="yes">
+      <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+      <link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32" />
+      <link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16" />
+
+      <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+      <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+      <script src='http://modernizr.com/downloads/modernizr-latest.js'></script>
+      <script type="text/javascript" src="js/soundcloud.player.api.js"></script>
+      <script type="text/javascript" src="js/sc-player.js"></script>
+        <script type="text/javascript" src='js/jquery-scrollable.js'></script>
+      <script type="text/javascript" src='js/jquery.adaptive-backgrounds.js'></script>
+      <script type="text/javascript" src='js/player.js'></script>  </head>
 
   <!-- Start RealTime when the body has loaded. -->
-  <body onLoad='startRealtimeCube()'>
+  <body onLoad='startJockey()'>
+    <nav class="people">
+    <ul>
+      <li id="djBtn" class="selected">DJs</li>
+      <li id="songsBtn">SONGS</li>
+      <li id="playingBtn">PLAYING</li>
+    </ul>
+    <div id="underline"></div>
+  </nav>
 
+  <div class="parent-container" id="main-parent">
 
-    <div class="container">
+    <a id="fab" class="fab-btn player"></a>
 
-      <img id="logo" src="images/icon_128.png">
-      <div class="main-heading-1">Realtime Cube</div>
-      <div class="main-heading-2">A 3D collaborative puzzle cube built using the <a target="_blank" href="https://developers.google.com/drive/realtime/">Google Drive Realtime API</a></div>
-      <hr>
-      <button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
-
-      <div id="collaborators">
-          <div id="title"><b>Collaborators:</b></div>
+    <div id="scroll-container" class="people">
+      <div id="people-container" class="three-column">
+        <div id="list-container">
+        <button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
+        <div id="collaborators">
           <div id="collaborators-container">
-          </div>
-          <button id="shareButton" class="button button-share" onclick="showShareDialog()">Share</button>
-      </div>
-
-      <div id="loading" style="display: none">
-          <img src="images/loading_spinner_16.gif" /> Loading...
-      </div>
-
-
-      <div id="content" style="display:none;">
-
-        <div id="instructions">
-          Instructions:
-          <div>Drag cube to rotate face</div>
-          <div>Drag background to rotate cube</div>
-          <div>Click to <a href="javascript:scrambleCube()">scramble cube</a></div>
         </div>
-        <br>
+        <button id="shareButton" class="button button-share" onclick="showShareDialog()">Share</button>
+      </div>
+        </div>
       </div>
 
-    </div>
+      <div id="playlist-container" class="three-column">
+        <div id="list-container">
+        </div>
+      </div>
 
-    <a href="https://github.com/googledrive/realtime-cube"><img style="position: fixed; bottom: 0; right: 0; border: 0;" src="/images/github.png" alt="Fork me on GitHub"></a>
+      <div id="player-container" class="three-column">
+        <div id="bg-overlay">
+          <span></span>
+        </div>
+        <div id="sound-icon">
+          <span></span>
+        </div>
 
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-25993200-5']);
-      _gaq.push(['_trackPageview']);
+        <div class="sc-player">
+          <a href="https://soundcloud.com/massappealrecs/05-all-my-life" class="sc-player"></a>
+          <a href="https://soundcloud.com/foolsgoldrecs/treasure-fingers-bosco-names-2" class="sc-player"></a>
+          <a href="https://soundcloud.com/vanilla/erykah-badu-on-on-vanilla-remix" class="sc-player"></a>
+        </div>
 
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
-    </script>
+        <div id="hip-box-hidden"></div>
+        <div id="hip-box" class="stopped">
+          <div class="score-lable top">Score</div>
+          <div class="score-lable bottom">/10</div>
+        </div>
+        
+        <div class="number-container offscreen" id="numberContainer">
+          <div id="draggable" class="offscreen">
+            <ol id="numbers">
+              <li value='empty' id="first-empty" class="number-spacer"></li>
+              <li value='1' class="my-score"><span></span></li>           <!-- 1 -->
+              <li value='2'><span></span></li>            <!-- 2 -->
+              <li value='3'><span></span></li>            <!-- 3 -->
+              <li value='4'><span></span></li>            <!-- 4 -->
+              <li value='5' id="middle-number"><span></span></li>           <!-- 5 -->
+              <li value='6'><span></span></li>            <!-- 6 -->
+              <li value='7'><span></span></li>            <!-- 7 -->
+              <li value='8'><span></span></li>            <!-- 8 -->
+              <li value='9'><span></span></li>            <!-- 9 -->
+              <li value='10'><span></span></li>           <!-- 10 -->
+              <li value='empty' id="last-empty" class="number-spacer"></li>
+            </ol>
+          </div>
+        </div>
+      </div>
+    </div> <!-- END scroll-container -->
+  </div>  <!-- END parent-container -->
+
+  <script src='js/debiki-utterscroll.js'></script>
   </body>
 </html>
