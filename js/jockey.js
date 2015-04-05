@@ -25,10 +25,10 @@ var realTimeOptions = {
    * Client ID from the API console.
    */
    // Production Client Id
-   clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
+   //clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
 
    //Local Client Id
-   //clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
+   clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
@@ -49,7 +49,6 @@ var realTimeOptions = {
    * ID of the auth button.
    */
   authButtonElementId: 'authorizeButton',
-
   /**
    * Automatically create file after auth.
    */
@@ -58,7 +57,7 @@ var realTimeOptions = {
   /**
    * Name of new files that gets created.
    */
-  defaultTitle: 'Traaaaaacks'
+  defaultTitle: 'Jockey'
 };
 
 function showShareDialog() {
@@ -73,8 +72,8 @@ function startJockey() {
   console.log("started");
   logDebug('Starting Jockey');
   var realTimeLoader = new rtclient.RealtimeLoader(realTimeOptions);
-  // realTimeLoader.start();
-  realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
+  realTimeLoader.start();
+  // realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
 }
 
 var AXIS_X = 'x';
@@ -105,6 +104,11 @@ var collabDoc;
 function initializeModel(model) {
   logDebug('initializeModel');
   model.getRoot().set(MOVES_KEY, model.createList());
+
+
+
+  var string = model.createString('Jockey Rockeys');
+  model.getRoot().set('text', string);
 }
 
 
@@ -120,7 +124,6 @@ function updateForRealTimeDoneInitializing() {
  * @param doc {gapi.drive.realtime.Document} the RealTime document.
  */
 function onFileLoaded(doc) {
-  console.log("file loaded");
   logDebug('onFileLoaded');
   collabDoc = doc;
 
@@ -133,10 +136,54 @@ function onFileLoaded(doc) {
       updateCollaborators();
     }.bind(this), 0);
   }.bind(this), 0);
+
+
+
+  var string = doc.getModel().getRoot().get('text');
+
+  // Keeping one box updated with a String binder.
+  var textArea1 = document.getElementById('editor1');
+  gapi.drive.realtime.databinding.bindString(string, textArea1);
+
+  // Keeping one box updated with a custom EventListener.
+  var textArea2 = document.getElementById('editor2');
+  var updateTextArea2 = function(e) {
+    textArea2.value = string;
+  };
+  string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
+  string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
+  textArea2.onkeyup = function() {
+    string.setText(textArea2.value);
+  };
+  updateTextArea2();
+
+  // Enabling UI Elements.
+  textArea1.disabled = false;
+  textArea2.disabled = false;
+
+  // Add logic for undo button.
+  var model = doc.getModel();
+  var undoButton = document.getElementById('undoButton');
+  var redoButton = document.getElementById('redoButton');
+
+  undoButton.onclick = function(e) {
+    model.undo();
+  };
+  redoButton.onclick = function(e) {
+    model.redo();
+  };
+
+  // Add event handler for UndoRedoStateChanged events.
+  var onUndoRedoStateChanged = function(e) {
+    undoButton.disabled = !e.canUndo;
+    redoButton.disabled = !e.canRedo;
+  };
+  model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+
+
 }
 
 function onCollaboratorsChanged(e) {
-  console.log("collaborators changed");
   updateCollaborators();
 }
 

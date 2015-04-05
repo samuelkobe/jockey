@@ -38,19 +38,18 @@
 
 	<!-- Start RealTime when the body has loaded. -->
 <body onLoad='startJockey()'>
-
-	<div id="loading"></div>
 		<nav class="people">
 			<ul>
 				<li id="djBtn" class="selected">DJs</li>
 				<li id="songsBtn">SONGS</li>
 			</ul>
 			<div id="underline"></div>
-			<!--<button id="shareButton" class="button button-share" onclick="showShareDialog()">Share</button>-->
+			<button id="shareButton" class="button button-share" onclick="showShareDialog()">Share</button>
 		</nav>
 
 		<div class="parent-container" id="main-parent">
 			<div id="scroll-container" class="people">
+
 				<div id="people-container" class="three-column">
 					<div id="list-container">
 						<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
@@ -58,6 +57,13 @@
 							<div id="collaborators-container">
 							</div>
 						</div>
+                  <textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
+        <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>
+        <br />
+
+        <!-- Undo and redo buttons. -->
+        <button id="undoButton" disabled>Undo</button>
+        <button id="redoButton" disabled>Redo</button>
 					</div>
 				</div>
 
