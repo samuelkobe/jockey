@@ -11,18 +11,8 @@ handlers:
   upload: index.html
   secure: always
 
-- url: /favicon.ico
-  static_files: favicon.ico
-  upload: favicon.ico
-  secure: always
-
-- url: /cube3d
-  static_dir: cube3d
-  secure: always
-
-- url: /screenshot.png
-  static_files: screenshot.png
-  upload: screenshot.png
+- url: /css
+  static_dir: css
   secure: always
 
 - url: /images
