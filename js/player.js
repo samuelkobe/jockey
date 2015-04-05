@@ -200,14 +200,14 @@ $( document ).ready(function() {
 	});
 });
 
-$(function() {
 
+$(function() {
 	$('body').on('click', '#search-results li', function() {
 	    var url = $(this).find("p:first").text();
 	    console.log(url)
 	});
-
 });
+
 
 $(window).resize(function() {
 	resizeArtwork();
