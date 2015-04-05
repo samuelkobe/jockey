@@ -314,6 +314,14 @@ nav.player #underline {
   opacity: 0.2;
 }
 
+nav.songs #inviteBtn {
+  display: none;
+}
+
+nav.people #songSearch {
+  display: none;
+}
+
 #songSearch {
   position: absolute;
   top: 0;
@@ -341,6 +349,21 @@ nav.player #underline {
   background-repeat: no-repeat;
   cursor: pointer;
   float: left;
+}
+
+#inviteBtn {
+  width: 60px;
+  height: 50px;
+  background: url('../images/icons/invite.svg');
+  background-position: center;
+  display: inline-block;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: fixed;
+  top: 0;
+  right: 0;
+  z-index: 2;
 }
 
 #songSearch.open #addSongBtn {
@@ -697,6 +720,7 @@ span.sc-duration {
   background-size: 0px;
   background-position: center;
   background-repeat: no-repeat;
+  font-family: 'Montserrat', sans-serif;
 }
 
 #hip-box-hidden {
