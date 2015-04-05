@@ -248,10 +248,6 @@ nav {
       -moz-transition:  all 250ms ease;
     }
 
-    nav ul li:nth-child(2) {
-      border-left: 1px solid rgba(0,0,0,0.1);
-    }
-
     nav.people ul li:first-child, nav.songs ul li:nth-child(2), nav.player ul li:nth-child(3){
       color: #0CBF8C;
       opacity: 1;
