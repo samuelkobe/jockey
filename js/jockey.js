@@ -69,7 +69,6 @@ function showShareDialog() {
 
 
 function startJockey() {
-  console.log("started");
   logDebug('Starting Jockey');
   var realTimeLoader = new rtclient.RealtimeLoader(realTimeOptions);
   realTimeLoader.start();
@@ -91,6 +90,9 @@ var movesList;
 
 var collabDoc;
 
+var PLAYLIST = 'playlist';
+var playlist;
+
 
 /**
  * This function is called the first time that the RealTime model is created
@@ -105,12 +107,11 @@ function initializeModel(model) {
   logDebug('initializeModel');
   model.getRoot().set(MOVES_KEY, model.createList());
 
-
-
   var string = model.createString('Jockey Rockeys');
   model.getRoot().set('text', string);
-}
 
+  model.getRoot().set(PLAYLIST, model.createList());
+}
 
 function updateForRealTimeDoneInitializing() {
   document.getElementById('collaborators').style.display = 'block';
@@ -138,6 +139,15 @@ function onFileLoaded(doc) {
   }.bind(this), 0);
 
 
+  var model = doc.getModel();
+  playlist = model.getRoot().get(PLAYLIST);
+
+  playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, addedToPlaylist);
+  playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
+
+
+
+
 
   var string = doc.getModel().getRoot().get('text');
 
@@ -160,27 +170,16 @@ function onFileLoaded(doc) {
   // Enabling UI Elements.
   textArea1.disabled = false;
   textArea2.disabled = false;
+}
 
-  // Add logic for undo button.
-  var model = doc.getModel();
-  var undoButton = document.getElementById('undoButton');
-  var redoButton = document.getElementById('redoButton');
+function addedToPlaylist(e) {
 
-  undoButton.onclick = function(e) {
-    model.undo();
-  };
-  redoButton.onclick = function(e) {
-    model.redo();
-  };
+  console.log("added a song.");
+}
 
-  // Add event handler for UndoRedoStateChanged events.
-  var onUndoRedoStateChanged = function(e) {
-    undoButton.disabled = !e.canUndo;
-    redoButton.disabled = !e.canRedo;
-  };
-  model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
-
-
+function removedFromPlaylist(e) {
+  
+  console.log("removed a song.");
 }
 
 function onCollaboratorsChanged(e) {
