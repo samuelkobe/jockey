@@ -146,7 +146,14 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
 
+$(function() {
 
+  $('body').on('click', '#search-results li', function() {
+      var url = $(this).find("p:first").text();
+      console.log(url)
+  });
+
+});
 
 
   var string = doc.getModel().getRoot().get('text');
