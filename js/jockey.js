@@ -145,17 +145,6 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, addedToPlaylist);
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
-
-$(function() {
-
-  $('body').on('click', '#search-results li', function() {
-      var url = $(this).find("p:first").text();
-      console.log(url)
-  });
-
-});
-
-
   var string = doc.getModel().getRoot().get('text');
 
   // Keeping one box updated with a String binder.
@@ -185,7 +174,7 @@ function addedToPlaylist(e) {
 }
 
 function removedFromPlaylist(e) {
-  
+
   console.log("removed a song.");
 }
 
@@ -317,3 +306,13 @@ function logDebug(msg) {
     window.console.debug(msg);
   }
 }
+
+
+// JQUERY CODE //
+
+$(function() {
+  $('body').on('click', '#search-results li', function() {
+      var url = $(this).find("p:first").text();
+      console.log(url)
+  });
+});
