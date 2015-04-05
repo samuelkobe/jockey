@@ -195,10 +195,6 @@ nav {
       -moz-transition:  all 250ms ease;
     }
 
-    nav ul li:nth-child(2) {
-      border-left: 1px solid rgba(0,0,0,0.1);
-    }
-
     nav.people ul li:first-child, nav.songs ul li:nth-child(2), nav.player ul li:nth-child(3){
       color: #0CBF8C;
       opacity: 1;
@@ -240,6 +236,20 @@ nav.player #underline {
   background: #fff;
   left: 66.666%;
   opacity: 0.2;
+}
+
+div#addSongBtn {
+  position: absolute;
+  top: 0;
+  right: 10px;
+  height: 50px;
+  width: 50px;
+  display: inline-block;
+  background: url('../images/icons/add-song.svg');
+  background-position: center;
+  display: inline-block;
+  background-size: 30px;
+  background-repeat: no-repeat;
 }
 
 /*-------------------------------------------------------
