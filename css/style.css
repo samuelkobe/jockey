@@ -142,6 +142,11 @@ body {
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
+  padding: 15px;
+  margin-top: 50px;
+  padding-bottom: 75px;
+  height: calc(100% - 50px);
+  box-sizing: border-box;
 }
 
 #fab {
@@ -225,7 +230,7 @@ nav {
   }
 
     nav ul li {
-      width: 33.33%;
+      width: 33.333%;
       display: inline-block;
       float: left;
       text-align: center;
@@ -245,7 +250,6 @@ nav {
 
     nav ul li:nth-child(2) {
       border-left: 1px solid rgba(0,0,0,0.1);
-      border-right: 1px solid rgba(0,0,0,0.1);
     }
 
     nav.people ul li:first-child, nav.songs ul li:nth-child(2), nav.player ul li:nth-child(3){
@@ -267,7 +271,7 @@ nav.player ul li {
 }
 
 #underline {
-  width: 33%;
+  width: 33.333%;
   height: 2px;
   background: #06D6A0;
   margin-top: -2px;
@@ -298,15 +302,21 @@ nav.player #underline {
 -------------------------------------------------------*/
 
 #player-container {
-  position: relative;
+  position: fixed;
   height: 100%;
-  width: 33.333%;
+  width: 100%;
   background: #fff;
   top: 0;
   left: 0;
+  z-index: 20;
   transition: all 500ms ease;
   -webkit-transition: all 500ms ease;
   -moz-transition: all 500ms ease;
+}
+
+#player-container.minimized {
+  top: calc(100% - 60px);
+  cursor: pointer;
 }
 
 #bg-overlay {
@@ -331,7 +341,7 @@ nav.player #underline {
 .sc-info {
   text-align: center;
   position: absolute;
-  bottom: 20px;
+  top: 20px;
   left: 50%;
   width: 100%;
   width: calc(100% - 60px);
@@ -342,6 +352,13 @@ nav.player #underline {
   overflow: hidden;
   pointer-events: none;
   color: white;
+  transition:           top 500ms ease;
+  -webkit-transition:   top 500ms ease;
+  -moz-transition:      top 500ms ease;
+}
+
+#player-container.minimized .sc-info {
+  top: 10px;
 }
 
   .sc-info a {
@@ -410,6 +427,10 @@ a.sc-info-toggle {
   left: 0;
 }
 
+#player-container.minimized .sc-scrubber {
+  height: 2px;
+}
+
 #player-container.minimized .sc-time-indicators {
   display: none;
 }
@@ -471,7 +492,7 @@ span.sc-duration {
   left: 0;
   width: 100%;
   box-sizing: border-box;
-  margin-top: 130px;
+  margin-top: 150px;
   margin-bottom: 150px;
   text-align: center;
 }
@@ -490,7 +511,7 @@ span.sc-duration {
   max-width: 100%;
   box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
   height: 100%;
-    transition:           all 500ms ease;
+  transition:           all 500ms ease;
   -webkit-transition:   all 500ms ease;
   -moz-transition:      all 500ms ease;
 }
@@ -511,8 +532,8 @@ span.sc-duration {
   min-width: 112px;
   width: 40%;
   height: 80%;
-  margin-top: 80px;
-  margin-bottom: 140px;
+  margin-top: 100px;
+  margin-bottom: 120px;
   height: calc(100% - 180px);
   left: 50%;
   transform:      translateX(-50%) translateY(-0%);
@@ -594,11 +615,14 @@ span.sc-duration {
 
 .sc-controls {
   position: absolute;
-  top: 50px;
-  left: 0;
+  top: 0px;
+  right: 0;
   margin: 25px;
   height: 30px;
   width: 30px;
+  transition:           all 500ms ease;
+  -webkit-transition:   all 500ms ease;
+  -moz-transition:      all 500ms ease;
 }
 
 .sc-controls a.sc-play {
@@ -611,6 +635,10 @@ span.sc-duration {
   background-position: center;
   color: rgba(0,0,0,0);
   background-repeat: no-repeat;
+}
+
+#player-container.minimized .sc-controls {
+  margin: 15px;
 }
 
 .sc-player.playing .sc-controls a.sc-play {
@@ -639,8 +667,8 @@ span.sc-duration {
 }
 
 .number-container {
-  margin-top: 140px;
-  margin-bottom: 160px;
+  margin-top: 150px;
+  margin-bottom: 150px;
   height: calc(100% - 300px);
   position: absolute;
   overflow: hidden;
@@ -745,14 +773,34 @@ span.sc-duration {
   -moz-transition:      all 800ms ease;
 }
 
-#sound-icon {
+#sound-icon, #minimize-icon {
   position: absolute;
-  top: 50px;
-  right: 0;
   height: 30px;
   width: 30px;
   padding: 25px;
   cursor: pointer;
+  transition:           all 500ms ease;
+  -webkit-transition:   all 500ms ease;
+  -moz-transition:      all 500ms ease;
+}
+
+#player-container.minimized #minimize-icon {
+  padding: 15px;
+}
+
+#minimize-icon {
+  left: 0;
+  top: 0;
+}
+
+#minimize-icon span {
+  background: url('../images/icons/minimize.svg');
+  background-position: center;
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  background-size: 25px;
+  background-repeat: no-repeat;
 }
 
 #sound-icon span {
@@ -763,4 +811,20 @@ span.sc-duration {
   display: inline-block;
   background-size: 25px;
   background-repeat: no-repeat;
+}
+
+
+.dcs-cd-dcs-c {
+  max-width: 200px;
+  width: 80%;
+  margin: 0 auto;
+  position: relative;
+}
+
+button#shareButton {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  height: 36px;
+  width: 100px;
 }

@@ -26,7 +26,7 @@ var realTimeOptions = {
    */
    // Production Id
    // clientId: "597181394454-757usl60u1hdtjalkm2lk9t61l7kblnp.apps.googleusercontent.com",
-   clientId: "597181394454-mmsvrjr1kgs9ou82o74fsmne6s4on7c0.apps.googleusercontent.com",
+   clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
@@ -60,6 +60,7 @@ var realTimeOptions = {
 };
 
 function showShareDialog() {
+  console.log("show share dialog");
   var shareClient = new gapi.drive.share.ShareClient(realTimeOptions.appId);
   shareClient.setItemIds(rtclient.params['fileId']);
   shareClient.showSettingsDialog();
@@ -67,10 +68,11 @@ function showShareDialog() {
 
 
 function startJockey() {
+  console.log("started");
   logDebug('Starting Jockey');
   var realTimeLoader = new rtclient.RealtimeLoader(realTimeOptions);
-  realTimeLoader.start();
-  // realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
+  // realTimeLoader.start();
+  realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
 }
 
 // var AXIS_X = 'x';
@@ -81,10 +83,10 @@ function startJockey() {
 // var MOVE_LAYER_KEY = 'layer';
 // var MOVE_DIRECTION_KEY = 'dir'
 
-// var MOVES_KEY = 'moves';
+//var MOVES_KEY = 'moves';
 
-// var rubik;
-// var movesList;
+//var rubik;
+//var movesList;
 
 var collabDoc;
 
@@ -97,10 +99,12 @@ var collabDoc;
  * RealTime World!', and is named 'text'.
  * @param model {gapi.drive.realtime.Model} the RealTime root model object.
  */
+ 
 function initializeModel(model) {
   logDebug('initializeModel');
   model.getRoot().set(MOVES_KEY, model.createList());
 }
+
 
 function updateForRealTimeDoneInitializing() {
   document.getElementById('collaborators').style.display = 'block';
@@ -114,6 +118,7 @@ function updateForRealTimeDoneInitializing() {
  * @param doc {gapi.drive.realtime.Document} the RealTime document.
  */
 function onFileLoaded(doc) {
+  console.log("file loaded");
   logDebug('onFileLoaded');
   collabDoc = doc;
 
@@ -129,6 +134,7 @@ function onFileLoaded(doc) {
 }
 
 function onCollaboratorsChanged(e) {
+  console.log("collaborators changed");
   updateCollaborators();
 }
 
