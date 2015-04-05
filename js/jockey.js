@@ -25,10 +25,10 @@ var realTimeOptions = {
    * Client ID from the API console.
    */
    // Production Client Id
-   clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
+   //clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
 
    //Local Client Id
-   //clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
+   clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
