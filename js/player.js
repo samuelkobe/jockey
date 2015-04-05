@@ -1,11 +1,56 @@
-
-
 jQuery(function($) {
   if (!Modernizr.touch) { // if not a smartphone
     debiki.Utterscroll.enable({
-      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box' });
+      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box, li' });
   }
 });
+
+/*-------------------------------------------------------
+
+    Soundcloud functions
+
+-------------------------------------------------------*/
+
+SC.initialize({
+  client_id: 'YOUR_CLIENT_ID'
+});
+
+function searchTracks(query) {
+	SC.get('/tracks', {q: query}, function(tracks) {
+	    $(tracks).each(function(index, track) {
+	    	// get the track image
+			var img = document.createElement('img');
+			img.src = track.artwork_url;
+			// get the track information
+			var info = document.createElement('div');
+			info.className = "track-info";
+			var artistName = document.createElement('h1');
+			artistName.innerText = track.user.username;
+			var trackName = document.createElement('h2');
+			trackName.innerText = track.title;
+			info.appendChild(artistName);
+			info.appendChild(trackName);
+
+
+			// get the url
+			var trackUrl = document.createElement('p');
+			trackUrl.innerText = track.permalink_url;
+
+	    	//create the result
+	    	var result = document.createElement('li');
+			result.appendChild(img);
+			result.appendChild(info);
+			result.appendChild(trackUrl);
+			$('#search-results').append(result);
+	    });
+	});
+}
+
+/*-------------------------------------------------------
+
+    Custom player
+
+-------------------------------------------------------*/
 
 function resizeArtwork() {
 	var containerWidth = $(".sc-player li.active").width();
@@ -91,7 +136,9 @@ window.onload = function () {
     });
 	centerNumbers();
 	resizeArtwork();
+}
 
+$( document ).ready(function() {
 	$('#draggable').scroll(function() {
 		checkNumbers();
 	});
@@ -129,16 +176,41 @@ window.onload = function () {
 		$('#player-container').toggleClass('minimized');
 	});	
 
-}
+
+	$('#addSongBtn').click(function() {
+		$('#songSearch').toggleClass('open');
+		$("#search-field").val("");
+		$("#search-field").focus();
+		$('#search-results-container').toggleClass('visible');
+	});	
+
+	$('#clearSearchBtn').click(function() {
+		$("#search-field").val("");
+		$("#search-results").empty();
+	});	
+
+	$('#search-field').bind('input', function() { 
+	    var query = $('#search-field').val();
+	    if (!query.trim()) {
+		    $("#search-results").empty();
+		} else {
+			$("#search-results").empty();
+	    	searchTracks(query);
+		}
+	});
+});
+
+$(function() {
+
+	$('body').on('click', '#search-results li', function() {
+	    var url = $(this).find("p:first").text();
+	    console.log(url)
+	});
+
+});
 
 $(window).resize(function() {
 	resizeArtwork();
 	centerNumbers();
 	checkNumbers();
 });
-
-/* ---------------------------
-
-		Click events
-
------------------------------- */

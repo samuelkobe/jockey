@@ -22,6 +22,15 @@
       background: #cb9ac7;
   }
 
+  .list-container::-webkit-scrollbar {
+      width: 5px;
+      background: rgba(0,0,0,0);
+  }
+
+  .list-container::-webkit-scrollbar-thumb {
+      background: #06D6A0;
+  }
+
 /*-------------------------------------------------------
 
     Structure
@@ -33,10 +42,15 @@
   background: #06D6A0;
 }
 
+img[src="null"] {
+    display: none;
+}
+
 body {
   margin: 0;
   padding: 0;
   overflow: hidden;
+  font-family: 'Merriweather', serif;
 }
 
 .parent-container {
@@ -83,18 +97,79 @@ body {
   background: #f7f7f7;
 }
 
-#list-container {
+.list-container {
   top: 0;
-  padding-top: 50px;
   height: 100%;
   overflow-x: hidden;
   overflow-y: scroll;
-  padding: 15px;
   margin-top: 50px;
   padding-bottom: 75px;
   height: calc(100% - 50px);
   box-sizing: border-box;
 }
+
+#search-results-container {
+  position: absolute;
+  top: 0;
+  background: #fff;
+  left: 0;
+  width: 100%;
+  display: none;
+}
+
+#search-results-container.visible {
+  display: inline-block;
+}
+
+  #search-results {
+    padding: 0;
+    margin: 0;
+  }
+
+  #search-results li {
+    list-style: none;
+    padding: 15px;
+    border-bottom: 1px solid rgba(0,0,0,0.1);
+    position: relative;
+    background: url('../images/icons/add.svg');
+    background-repeat: no-repeat;
+    background-position: calc(100% - 10px) center;
+    padding-right: 50px;
+    min-height: 45px;
+    cursor: pointer;
+  }
+
+  #search-results li img {
+    width: 45px;
+    height: 45px;
+    float: left;
+    background: #e8e8e8;
+  }
+
+  .track-info {
+    margin-left: 60px;
+  }
+
+    .track-info h1 {
+      margin: 0;
+      font-family: 'Lato', sans-serif;
+      font-weight: bold;
+      font-size: 12px;
+      opacity: 0.6;
+      margin-bottom: 5px;
+    }
+
+    .track-info h2 {
+      font-size: 15px;
+      margin: 0;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      overflow: hidden;
+    }
+
+    #search-results p {
+      display: none;
+    }
 
 #fab {
   z-index: 50;
@@ -181,23 +256,24 @@ nav {
       display: inline-block;
       float: left;
       text-align: center;
-      padding: 20px;
+      padding: 18px;
       padding-bottom: 10px;
-      box-sizing:     border-box;
-      -webkit-box-sizing: border-box;
-      -moz-box-sizing:  border-box;
       cursor: pointer;
-      font-weight: bold;
       font-size: 15px;
       opacity: 0.5;
-      transition:     all 250ms ease;
+      box-sizing:         border-box;
+      -webkit-box-sizing: border-box;
+      -moz-box-sizing:    border-box;
+      transition:         all 250ms ease;
       -webkit-transition: all 250ms ease;
-      -moz-transition:  all 250ms ease;
+      -moz-transition:    all 250ms ease;
+      font-family: 'Lato', sans-serif;
     }
 
     nav.people ul li:first-child, nav.songs ul li:nth-child(2), nav.player ul li:nth-child(3){
       color: #0CBF8C;
       opacity: 1;
+      font-weight: bold;
     }
 
 nav.player {
@@ -238,18 +314,130 @@ nav.player #underline {
   opacity: 0.2;
 }
 
-div#addSongBtn {
+#songSearch {
   position: absolute;
   top: 0;
-  right: 10px;
+  right: 0;
   height: 50px;
-  width: 50px;
-  display: inline-block;
+  width: 60px;
+  background-color: #fff;
+  transition:         all 250ms ease;
+  -webkit-transition: all 250ms ease;
+  -moz-transition:    all 250ms ease;
+}
+
+#songSearch.open {
+  width: 100%;
+  border-bottom: 2px solid #DFDFDF;
+}
+
+#addSongBtn {
+  width: 60px;
+  height: 50px;
   background: url('../images/icons/add-song.svg');
   background-position: center;
   display: inline-block;
   background-size: 30px;
   background-repeat: no-repeat;
+  cursor: pointer;
+  float: left;
+}
+
+#songSearch.open #addSongBtn {
+  background: url('../images/icons/back.svg');
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+}
+
+#clearSearchBtn {
+  width: 60px;
+  height: 50px;
+  background: url('../images/icons/clear-search.svg');
+  background-position: center;
+  background-size: 30px;
+  background-repeat: no-repeat;
+  cursor: pointer;
+  position: fixed;
+  pointer-events:none;
+  right: 0;
+  top: 0;
+  opacity: 0;
+  transition:         all 200ms ease;
+  -webkit-transition: all 200ms ease;
+  -moz-transition:    all 200ms ease;
+}
+
+#songSearch.open #clearSearchBtn{
+  display: inline-block;
+  opacity: 1;
+  pointer-events:all;
+}
+
+input.unstyled, textarea.unstyled {
+  padding: 0;
+  margin: 0;
+  border: none;
+  outline: none;
+  resize: none;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  border-radius: 0;
+  -webkit-border-radius: 0;
+  -moz-border-radius: 0;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box;
+  -webkit-box-sizing: content-box;
+  -moz-box-sizing: content-box;
+  -o-box-sizing: content-box;
+  box-sizing: content-box;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  box-shadow: none;
+  -webkit-box-shadow: none;
+  -moz-box-shadow: none;
+  -o-box-shadow: none;
+  background: rgba(0,0,0,0);
+  color: black;
+}
+
+input#search-field {
+  height: 46px;
+  width: 80%;
+  width: calc(100% - 75px);
+  border-bottom: 2px solid #06D6A0;
+  outline: 0;
+  font-size: 15px;
+  margin-top: 4px;
+  display: inline-block;
+  left: 0;
+  float: left;
+  font-family: 'Lato', sans-serif;
 }
 
 /*-------------------------------------------------------
@@ -332,6 +520,8 @@ div#addSongBtn {
     width: 100%;
     color: rgba(0,0,0,0);
     margin-left: -10px;
+    font-family: 'Lato', sans-serif;
+    font-weight: normal;
   }
 
   .sc-info h3 {
@@ -339,7 +529,7 @@ div#addSongBtn {
     top: 20px;
     margin: 0;
     width: 100%;
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 300;
     white-space: nowrap;
   }
