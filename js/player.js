@@ -66,19 +66,16 @@ function animateNav() {
 		$("#djBtn").addClass('selected');
 		$("#songsBtn").removeClass('selected');
 		$("#playingBtn").removeClass('selected');
-		$("nav").removeClass("player");
 	} 
 	else if (scrollPercent >= 0.3 && scrollPercent < 0.6) {
 		$("#djBtn").removeClass('selected');
 		$("#songsBtn").addClass('selected');
 		$("#playingBtn").removeClass('selected');
-		$("nav").removeClass("player");
 	} 
 	else {
 		$("#djBtn").removeClass('selected');
 		$("#songsBtn").removeClass('selected');
 		$("#playingBtn").addClass('selected');
-		$("nav").addClass("player");
 	}
 }
 
@@ -94,49 +91,44 @@ window.onload = function () {
     });
 	centerNumbers();
 	resizeArtwork();
-	$('#minimize-icon').click(function() {
-		$('#player-container').toggleClass('minimized');
-	});	
 
 	$('#draggable').scroll(function() {
 		checkNumbers();
 	});
 
 	$('#djBtn').click(function() {
-		$("#scroll-container").removeClass("player");
 		$("#scroll-container").addClass("people");
 		$("#scroll-container").removeClass("songs");
 		$("nav").removeClass("player");
 		$("nav").addClass("people");
 		$("nav").removeClass("songs");
-		$("#fab").removeClass("player");
-		$("#fab").addClass("people");
-		$("#fab").removeClass("songs");
 	});		
 
 	$('#songsBtn').click(function() {
-		$("#scroll-container").removeClass("player");
 		$("#scroll-container").removeClass("people");
 		$("#scroll-container").addClass("songs");
 		$("nav").removeClass("player");
 		$("nav").removeClass("people");
 		$("nav").addClass("songs");
-		$("#fab").removeClass("player");
-		$("#fab").removeClass("people");
-		$("#fab").addClass("songs");
 	});	
 
 	$('#playingBtn').click(function() {
-		$("#scroll-container").addClass("player");
 		$("#scroll-container").removeClass("people");
 		$("#scroll-container").removeClass("songs");
-		$("nav").addClass("player");
 		$("nav").removeClass("people");
 		$("nav").removeClass("songs");
-		$("#fab").addClass("player");
-		$("#fab").removeClass("people");
-		$("#fab").removeClass("songs");
 	});
+
+
+	$('#player-container.minimized').mousedown(function() {
+		$('#player-container').removeClass("minimized");
+	});
+
+
+	$('#minimize-icon').click(function() {
+		$('#player-container').toggleClass('minimized');
+	});	
+
 }
 
 $(window).resize(function() {

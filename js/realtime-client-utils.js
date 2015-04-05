@@ -72,7 +72,7 @@ rtclient.getParams = function() {
       params[paramStr[0]] = unescape(paramStr[1]);
     }
   }
-  console.log(params);
+  // console.log(params);
   return params;
 }
 
@@ -95,7 +95,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  console.log(value);
+  // console.log(value);
   return value;
 }
 
@@ -157,7 +157,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       user_id: userId,
       immediate: false
     }, handleAuthResult);
-    console.log(clientId);
+    // console.log(clientId);
   };
 
   // Try with no popups first.
