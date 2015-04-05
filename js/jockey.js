@@ -24,9 +24,11 @@ var realTimeOptions = {
   /**
    * Client ID from the API console.
    */
-   // Production Id
-   // clientId: "597181394454-757usl60u1hdtjalkm2lk9t61l7kblnp.apps.googleusercontent.com",
-   clientId: "597181394454-mmsvrjr1kgs9ou82o74fsmne6s4on7c0.apps.googleusercontent.com",
+   // Production Client Id
+   clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
+
+   //Local Client Id
+   //clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
@@ -73,18 +75,18 @@ function startJockey() {
   // realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
 }
 
-// var AXIS_X = 'x';
-// var AXIS_Y = 'y';
-// var AXIS_Z = 'z';
+var AXIS_X = 'x';
+var AXIS_Y = 'y';
+var AXIS_Z = 'z';
 
-// var MOVE_AXIS_KEY = 'axis';
-// var MOVE_LAYER_KEY = 'layer';
-// var MOVE_DIRECTION_KEY = 'dir'
+var MOVE_AXIS_KEY = 'axis';
+var MOVE_LAYER_KEY = 'layer';
+var MOVE_DIRECTION_KEY = 'dir'
 
-// var MOVES_KEY = 'moves';
+var MOVES_KEY = 'moves';
 
-// var rubik;
-// var movesList;
+var rubik;
+var movesList;
 
 var collabDoc;
 
