@@ -148,7 +148,7 @@ function onFileLoaded(doc) {
 
   $( document ).ready(function() {
     for(i = 0; i < playlist.length; i++) {
-      $( "#playlist" ).append("<li>" + playlist.get(i) + "</li>");
+      $( "#playlist" ).append("<li>" + playlist.get(i)[0] + "</li>");
     }
   });
 
@@ -177,7 +177,7 @@ function onFileLoaded(doc) {
 
 function addedToPlaylist(e) {
     $( document ).ready(function() {
-      $( "#playlist" ).append("<li>" + playlist.get(playlist.length-1) + "</li>");
+      $( "#playlist" ).append("<li>" + playlist.get(playlist.length-1)[0] + "</li>");
   });
 }
 
