@@ -138,34 +138,41 @@ function onFileLoaded(doc) {
     }.bind(this), 0);
   }.bind(this), 0);
 
-
   var model = doc.getModel();
   playlist = model.getRoot().get(PLAYLIST);
 
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, addedToPlaylist);
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
-  var string = doc.getModel().getRoot().get('text');
 
-  // Keeping one box updated with a String binder.
-  var textArea1 = document.getElementById('editor1');
-  gapi.drive.realtime.databinding.bindString(string, textArea1);
+  $( document ).ready(function() {
+    console.log("This happened first");
+    for(i = 0; i < playlist.length; i++) {
+      $( "#playlist" ).append("<p>" + playlist.get(i) + "</p>");
+    }
+  });
 
-  // Keeping one box updated with a custom EventListener.
-  var textArea2 = document.getElementById('editor2');
-  var updateTextArea2 = function(e) {
-    textArea2.value = string;
-  };
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
-  textArea2.onkeyup = function() {
-    string.setText(textArea2.value);
-  };
-  updateTextArea2();
+  // var string = doc.getModel().getRoot().get('text');
 
-  // Enabling UI Elements.
-  textArea1.disabled = false;
-  textArea2.disabled = false;
+  // // Keeping one box updated with a String binder.
+  // var textArea1 = document.getElementById('editor1');
+  // gapi.drive.realtime.databinding.bindString(string, textArea1);
+
+  // // Keeping one box updated with a custom EventListener.
+  // var textArea2 = document.getElementById('editor2');
+  // var updateTextArea2 = function(e) {
+  //   textArea2.value = string;
+  // };
+  // string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
+  // string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
+  // textArea2.onkeyup = function() {
+  //   string.setText(textArea2.value);
+  // };
+  // updateTextArea2();
+
+  // // Enabling UI Elements.
+  // textArea1.disabled = false;
+  // textArea2.disabled = false;
 }
 
 function addedToPlaylist(e) {
@@ -307,12 +314,15 @@ function logDebug(msg) {
   }
 }
 
-
 // JQUERY CODE //
 
 $(function() {
   $('body').on('click', '#search-results li', function() {
       var url = $(this).find("p:first").text();
-      console.log(url)
+      playlist.push(url)
+      console.log( "<a href='" + playlist.get(playlist.length-1) + "' class='sc-player'></a>");
+
+      // for (i = 0; i < playlist.length; i++)
+      // $( "#playlist" ).append("<p>" + playlist.get(playlist.length-1) + "</p>");
   });
 });
