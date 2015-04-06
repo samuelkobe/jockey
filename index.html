@@ -7,11 +7,6 @@
 	<!-- Load the RealTime libraries. -->
 	<script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
 
-	<!-- Load the utility library. -->
-	<script type="text/javascript" src="js/realtime-client-utils.js"></script>
-
-	<!-- Load our custom js/rt options for Jockey. -->
-	<script type="text/javascript" src="js/jockey.js"></script>
 
 	<!-- Setting styles, js & other meta tags -->
 	<link rel="stylesheet" href="css/style.css" />
@@ -27,6 +22,12 @@
 
 	<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
 	<script type="text/javascript" src="js/jquery-ui.js"></script>
+
+  <!-- Load the utility library. -->
+  <script type="text/javascript" src="js/realtime-client-utils.js"></script>
+
+  <!-- Load our custom js/rt options for Jockey. -->
+  <script type="text/javascript" src="js/jockey.js"></script>
 
 	<script type="text/javascript" src="http://connect.soundcloud.com/sdk.js"></script>
   	<script type="text/javascript" src="js/modenizer.js"></script>
@@ -77,11 +78,18 @@
 
 
 					<div class="list-container">
+
 						<div id="add-song-prompt" class="onboarding-prompt">
 							<p><span>Add songs</span> to the shared playlist.</p>
 							<br>
 							<button class="got-it-button" id="remove-song-prompt">Ok, got it</button>
 						</div>
+												
+						<ol id="playlist">
+							<li>
+								<p class="url-to-load">https://soundcloud.com/massappealrecs/05-all-my-life</p>
+							</li>
+						</ol>
 					</div>
 
 

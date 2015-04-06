@@ -11,9 +11,9 @@ jQuery(function($) {
 
 -------------------------------------------------------*/
 
-SC.initialize({
-  client_id: 'YOUR_CLIENT_ID'
-});
+	SC.initialize({
+	  client_id: 'YOUR_CLIENT_ID'
+	});
 
 function searchTracks(query) {
 	SC.get('/tracks', {q: query}, function(tracks) {
@@ -35,7 +35,6 @@ function searchTracks(query) {
 			trackName.innerText = track.title;
 			info.appendChild(artistName);
 			info.appendChild(trackName);
-
 
 			// get the url
 			var trackUrl = document.createElement('p');
@@ -220,15 +219,6 @@ $(document).ready(function() {
 	});	
 
 });
-
-
-$(function() {
-	$('body').on('click', '#search-results li', function() {
-	    var url = $(this).find("p:first").text();
-	    console.log(url)
-	});
-});
-
 
 $(window).resize(function() {
 	resizeArtwork();

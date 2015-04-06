@@ -92,6 +92,7 @@ var collabDoc;
 
 var PLAYLIST = 'playlist';
 var playlist;
+var GLOBAL_USER_NAME;
 
 
 /**
@@ -138,7 +139,6 @@ function onFileLoaded(doc) {
     }.bind(this), 0);
   }.bind(this), 0);
 
-
   var model = doc.getModel();
   playlist = model.getRoot().get(PLAYLIST);
 
@@ -146,39 +146,43 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
 
+  $( document ).ready(function() {
+    for(i = 0; i < playlist.length; i++) {
+      $( "#playlist" ).append("<li>" + playlist.get(i)[0] + "</li>");
+    }
+  });
 
+  // var string = doc.getModel().getRoot().get('text');
 
+  // // Keeping one box updated with a String binder.
+  // var textArea1 = document.getElementById('editor1');
+  // gapi.drive.realtime.databinding.bindString(string, textArea1);
 
-  var string = doc.getModel().getRoot().get('text');
+  // // Keeping one box updated with a custom EventListener.
+  // var textArea2 = document.getElementById('editor2');
+  // var updateTextArea2 = function(e) {
+  //   textArea2.value = string;
+  // };
+  // string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
+  // string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
+  // textArea2.onkeyup = function() {
+  //   string.setText(textArea2.value);
+  // };
+  // updateTextArea2();
 
-  // Keeping one box updated with a String binder.
-  var textArea1 = document.getElementById('editor1');
-  gapi.drive.realtime.databinding.bindString(string, textArea1);
-
-  // Keeping one box updated with a custom EventListener.
-  var textArea2 = document.getElementById('editor2');
-  var updateTextArea2 = function(e) {
-    textArea2.value = string;
-  };
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
-  string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
-  textArea2.onkeyup = function() {
-    string.setText(textArea2.value);
-  };
-  updateTextArea2();
-
-  // Enabling UI Elements.
-  textArea1.disabled = false;
-  textArea2.disabled = false;
+  // // Enabling UI Elements.
+  // textArea1.disabled = false;
+  // textArea2.disabled = false;
 }
 
 function addedToPlaylist(e) {
-
-  console.log("added a song.");
+    $( document ).ready(function() {
+      $( "#playlist" ).append("<li>" + playlist.get(playlist.length-1)[0] + "</li>");
+  });
 }
 
 function removedFromPlaylist(e) {
-  
+
   console.log("removed a song.");
 }
 
@@ -278,6 +282,9 @@ function genCollaboratorDiv(collaborator) {
 
   collaboratorDiv.appendChild(collaboratorName);
   collaboratorDiv.appendChild(imgDiv);
+
+  GLOBAL_USER_NAME = collaborator.displayName;
+
   return collaboratorDiv;
 }
 
@@ -310,3 +317,19 @@ function logDebug(msg) {
     window.console.debug(msg);
   }
 }
+
+// JQUERY CODE //
+
+$(function() {
+  $('body').on('click', '#search-results li', function() {
+      var url = $(this).find("p:first").text();
+      var playing = false;
+      var score = 0;
+      var whoAdded = GLOBAL_USER_NAME;
+
+      var song = [url, playing, score, whoAdded];
+      
+      playlist.push(song);
+      console.log(playlist.get(playlist.length-1));
+  });
+});
