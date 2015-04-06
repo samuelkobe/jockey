@@ -92,6 +92,7 @@ var collabDoc;
 
 var PLAYLIST = 'playlist';
 var playlist;
+var GLOBAL_USER_NAME;
 
 
 /**
@@ -146,9 +147,8 @@ function onFileLoaded(doc) {
 
 
   $( document ).ready(function() {
-    console.log("This happened first");
     for(i = 0; i < playlist.length; i++) {
-      $( "#playlist" ).append("<p>" + playlist.get(i) + "</p>");
+      $( "#playlist" ).append("<li>" + playlist.get(i) + "</li>");
     }
   });
 
@@ -176,8 +176,9 @@ function onFileLoaded(doc) {
 }
 
 function addedToPlaylist(e) {
-
-  console.log("added a song.");
+    $( document ).ready(function() {
+      $( "#playlist" ).append("<li>" + playlist.get(playlist.length-1) + "</li>");
+  });
 }
 
 function removedFromPlaylist(e) {
@@ -281,6 +282,9 @@ function genCollaboratorDiv(collaborator) {
 
   collaboratorDiv.appendChild(collaboratorName);
   collaboratorDiv.appendChild(imgDiv);
+
+  GLOBAL_USER_NAME = collaborator.displayName;
+
   return collaboratorDiv;
 }
 
@@ -319,10 +323,13 @@ function logDebug(msg) {
 $(function() {
   $('body').on('click', '#search-results li', function() {
       var url = $(this).find("p:first").text();
-      playlist.push(url)
-      console.log( "<a href='" + playlist.get(playlist.length-1) + "' class='sc-player'></a>");
+      var playing = false;
+      var score = 0;
+      var whoAdded = GLOBAL_USER_NAME;
 
-      // for (i = 0; i < playlist.length; i++)
-      // $( "#playlist" ).append("<p>" + playlist.get(playlist.length-1) + "</p>");
+      var song = [url, playing, score, whoAdded];
+      
+      playlist.push(song);
+      console.log(playlist.get(playlist.length-1));
   });
 });
