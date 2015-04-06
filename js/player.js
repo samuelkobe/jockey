@@ -172,7 +172,7 @@ $(document).ready(function() {
 	});
 
 
-	$('#player-container.minimized').mousedown(function() {
+	$('#player-container.minimized #bg-overlay').mousedown(function() {
 		$('#player-container').removeClass("minimized");
 	});
 
@@ -203,6 +203,22 @@ $(document).ready(function() {
 	    	searchTracks(query);
 		}
 	});
+
+	$('#draggable').scroll(function() {
+		$('#numbers').addClass('active')
+		$('#confirm-score').addClass('visible');
+	});	
+
+	$('#confirm-score').click(function() {
+		$('#numbers').removeClass('active')
+		$('#confirm-score').removeClass('visible');
+	});	
+
+
+	$('#remove-song-prompt').click(function() {
+		$('#add-song-prompt').remove();
+	});	
+
 });
 
 

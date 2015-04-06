@@ -776,6 +776,8 @@
 
   $(function() {
 
+    doShit();
+
     $('body').on('click', '#playlist li', function() {
       var urlToLoad = $(this).find('p.url-to-load').text();
 

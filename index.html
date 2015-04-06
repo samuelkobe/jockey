@@ -49,7 +49,6 @@
 				<li id="songsBtn">SONGS</li>
 			</ul>
 			<div id="underline"></div>
-			<!-- <button id="shareButton" class="button button-share" onclick="showShareDialog()">Share</button> -->
 			<div id="inviteBtn"></div>
 			<div id="songSearch">
 				<div id="addSongBtn"></div>
@@ -63,19 +62,14 @@
 
 				<div id="people-container" class="three-column">
 					<div class="list-container">
+						<div class="narrow-container">
+							<button id="shareButton" class="button button-share" onclick="showShareDialog()">Sharing Settings</button>
+						</div>
 						<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
 						<div id="collaborators">
 							<div id="collaborators-container">
 							</div>
 						</div>
-						<!-- 
-						<textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
-						<textarea id="editor2" rows="15" cols="50" disabled="true"></textarea> 
-						-->
-						<br>
-        <!-- Undo and redo buttons. -->
-        <!--<button id="undoButton" disabled>Undo</button>
-        <button id="redoButton" disabled>Redo</button> -->
 					</div>
 				</div>
 
@@ -83,14 +77,11 @@
 
 
 					<div class="list-container">
-
-						<!-- 						
-						<ol id="playlist">
-							<li>
-								<p class="url-to-load">https://soundcloud.com/massappealrecs/05-all-my-life</a></p>
-							</li>
-						</ol> -->
-
+						<div id="add-song-prompt" class="onboarding-prompt">
+							<p><span>Add songs</span> to the shared playlist.</p>
+							<br>
+							<button class="got-it-button" id="remove-song-prompt">Ok, got it</button>
+						</div>
 					</div>
 
 
@@ -111,7 +102,8 @@
 				<span></span>
 			</div>
 
-			<div class="sc-player uninitialized">
+			<div class="sc-player">
+				<a href="https://soundcloud.com/luakabop/william-onyeabor-vs-hot-chip" class="sc-player"></a>
 			</div>
 
 			<div id="hip-box-hidden"></div>
@@ -138,6 +130,8 @@
 					</ol>
 				</div>
 			</div>
+
+			<button id="confirm-score">Confirm</button>
 		</div>
 
 		<script src='js/debiki-utterscroll.js'></script>
