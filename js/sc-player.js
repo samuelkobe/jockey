@@ -360,6 +360,9 @@
         $('.sc-waveform-container', $player).html('<img src="' + track.waveform_url +'" />');
 
         $player.trigger('onPlayerTrackSwitch.scPlayer', [track]);
+        getImgColor(function() {
+          getColor();
+        });
       },
       play = function(track) {
         var url = track.permalink_url;
@@ -418,9 +421,9 @@
           scrollLeft: 0
         }, 200, "easeOutCubic");
 
-        getImgColor(function() {
-          getColor();
-        });
+        // getImgColor(function() {
+        //   getColor();
+        // });
 
       },
       onSeek = function(player, relative) {
@@ -514,12 +517,18 @@
         playerId = players.length,
         $source = node && $(node),
         sourceClasses = $source[0].className.replace('sc-player', ''),
-        links = opts.links || $.map($('a', $source).add($source.filter('a')), function(val) { return {url: val.href, title: val.innerHTML}; }),
+
+        links = opts.links || $.map($('a', $source).add($source.filter('a')), function(val) { 
+          return {url: val.href, title: val.innerHTML}; 
+        }),
+
         $player = $('<div class="sc-player loading"></div>').data('sc-player', {id: playerId}),
         $artworks = $('<ol class="sc-artwork-list"></ol>').appendTo($player),
         $info = $('<div class="sc-info"><h3></h3><h4></h4><p></p><a href="#" class="sc-info-close">X</a></div>').appendTo($player),
         $controls = $('<div class="sc-controls"></div>').appendTo($player),
         $list = $('<ol class="sc-trackslist"></ol>').appendTo($player);
+
+        console.log(links[0]);
 
         // add the classes of the source node to the player itself
         // the players can be indvidually styled this way
@@ -649,7 +658,6 @@
   // toggling play/pause
   
   $(document).on('click','#hip-box, a.sc-play', function(event) {
-    console.log("play god dammit!");
     var $list = $(this).closest('.sc-player').find('ol.sc-trackslist');
     // simulate the click in the tracklist
     $list.find('li.active').click();
@@ -661,7 +669,6 @@
 
 
   $(document).on('click','#hip-box', function(event) {
-    console.log("play god dammit!");
     $('a.sc-play').trigger('click');
     $('#hip-box').removeClass('stopped');
     $('#numberContainer').removeClass('offscreen');
@@ -759,10 +766,38 @@
   // -------------------------------------------------------------------
 
   // the default Auto-Initialization
-  $(function() {
+
+
+  function doShit() {
     if($.isFunction($.scPlayer.defaults.onDomReady)){
       $.scPlayer.defaults.onDomReady();
     }
+  }
+
+  $(function() {
+
+    $('body').on('click', '#playlist li', function() {
+      var urlToLoad = $(this).find('p.url-to-load').text();
+
+      // check if player has any songs added to it yet
+      if ($("div.sc-player").hasClass("uninitialized")) {
+        $("div.sc-player").removeClass("uninitialized");
+
+        //var newSong = document.createElement('a');
+        //newSong.attr("href", urlToLoad);
+
+        $('<a />').attr({
+          href: urlToLoad
+        }).appendTo($('div.sc-player'));
+
+        doShit();
+        // add a song to the song as a child and initialize the badass scPlayer
+      } else {
+        // just add a song to the existing scPlayer
+      }
+    });
+
+
   });
 
 })(jQuery);

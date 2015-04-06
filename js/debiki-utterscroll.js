@@ -48,8 +48,12 @@ debiki.Utterscroll = (function(options) {
   // Don't call console.debug in IE 9 (and 7 & 8); it's not available unless
   // the dev tools window is open. Use this safe wrapper instead of
   // console.log. (COULD make separate Prod and Dev builds, filter out logging)
+  
   var debug = (typeof console === 'undefined' || !console.debug) ?
-      function() {} : function() { console.debug.apply(console, arguments); };
+      function() {} : function() { 
+        //console.debug.apply(console, arguments); 
+      };
+      
 
   var defaults = {
     defaultScrollstoppers: 'a, area, button, command, input, keygen, label,'+

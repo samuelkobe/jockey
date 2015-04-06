@@ -38,12 +38,11 @@
 	<script type="text/javascript" src='js/player.js'></script>  
 
 
-	<link href='http://fonts.googleapis.com/css?family=Merriweather:400,700,900italic' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	<link href='http://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
 </head>
 
-	<!-- Start RealTime when the body has loaded. -->
+<!-- Start RealTime when the body has loaded. -->
 <body onLoad='startJockey()'>
 		<nav class="people">
 			<ul>
@@ -70,8 +69,10 @@
 							<div id="collaborators-container">
 							</div>
 						</div>
+						<!-- 
 						<textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
-						<textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>
+						<textarea id="editor2" rows="15" cols="50" disabled="true"></textarea> 
+						-->
 						<br>
         <!-- Undo and redo buttons. -->
         <!--<button id="undoButton" disabled>Undo</button>
@@ -80,8 +81,20 @@
 				</div>
 
 				<div id="playlist-container" class="three-column">
+
+
 					<div class="list-container">
+
+						<!-- 						
+						<ol id="playlist">
+							<li>
+								<p class="url-to-load">https://soundcloud.com/massappealrecs/05-all-my-life</a></p>
+							</li>
+						</ol> -->
+
 					</div>
+
+
 					<div id="search-results-container" class="list-container">
 						<ul id="search-results">
 						</ul>
@@ -99,10 +112,7 @@
 				<span></span>
 			</div>
 
-			<div class="sc-player">
-				<a href="https://soundcloud.com/massappealrecs/05-all-my-life" class="sc-player"></a>
-				<a href="https://soundcloud.com/foolsgoldrecs/treasure-fingers-bosco-names-2" class="sc-player"></a>
-				<a href="https://soundcloud.com/vanilla/erykah-badu-on-on-vanilla-remix" class="sc-player"></a>
+			<div class="sc-player uninitialized">
 			</div>
 
 			<div id="hip-box-hidden"></div>

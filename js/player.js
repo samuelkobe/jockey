@@ -1,7 +1,7 @@
 jQuery(function($) {
   if (!Modernizr.touch) { // if not a smartphone
     debiki.Utterscroll.enable({
-      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box, li' });
+      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box' });
   }
 });
 
@@ -20,7 +20,12 @@ function searchTracks(query) {
 	    $(tracks).each(function(index, track) {
 	    	// get the track image
 			var img = document.createElement('img');
-			img.src = track.artwork_url;
+			if (!track.artwork_url) {
+				img.src = 'images/artwork-placeholder.jpg'
+			} else {
+				img.src = track.artwork_url;
+			}
+
 			// get the track information
 			var info = document.createElement('div');
 			info.className = "track-info";
@@ -37,7 +42,7 @@ function searchTracks(query) {
 
 	    	//create the result
 	    	var result = document.createElement('li');
-			result.appendChild(img);
+	    	result.appendChild(img);
 			result.appendChild(info);
 			result.appendChild(trackUrl);
 			$('#search-results').append(result);
@@ -137,7 +142,7 @@ window.onload = function () {
 	resizeArtwork();
 }
 
-$( document ).ready(function() {
+$(document).ready(function() {
 	$('#draggable').scroll(function() {
 		checkNumbers();
 	});
