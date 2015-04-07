@@ -230,6 +230,11 @@ $(document).ready(function() {
 	$('#confirm-score').click(function() {
 		$('#numbers').removeClass('active')
 		$('#confirm-score').removeClass('visible');
+
+
+		// change tha score!
+
+
 	});	
 
 

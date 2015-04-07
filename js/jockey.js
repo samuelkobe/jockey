@@ -134,6 +134,7 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
   generatePlaylistItems();
+  checkPlaying();
 
   // var string = doc.getModel().getRoot().get('text');
 
@@ -159,6 +160,21 @@ function onFileLoaded(doc) {
   addFirstSongToPlaylist();
 }
 
+function checkPlaying() {
+    var playingUrl = $('.sc-player li.active a').attr("href");
+
+    // add class playing to playlist item
+    $("#playlist li").each(function() {
+      var thisTrack = $(this);
+      var listUrl = $(thisTrack).find("p:first").text();
+      if (listUrl == playingUrl) {
+        thisTrack.addClass("playing");
+      } else {
+        thisTrack.removeClass("playing");
+      }
+    });
+}
+
 function generatePlaylistItems() {
     $('#playlist').empty();
 
@@ -181,17 +197,26 @@ function generatePlaylistItems() {
       var trackUrl = document.createElement('p');
       trackUrl.innerText = playlist.get(i)[0]
 
+      // get the score
+      var rating = document.createElement('div');
+      rating.className = "rating";
+      rating.innerText = playlist.get(i)[5];
+
       //create the result
       var result = document.createElement('li');
       result.appendChild(img);
       result.appendChild(info);
       result.appendChild(trackUrl);
+      result.appendChild(rating);
+
       $('#playlist').append(result);
     }
+
 }
 
 function addedToPlaylist(e) {
     generatePlaylistItems();
+    checkPlaying();
 }
 
 function removedFromPlaylist(e) {
