@@ -190,14 +190,14 @@ $(document).ready(function() {
 		if (!($("#songSearch").hasClass("open"))) {
 			$('#songSearch').addClass('open');
 			$('#search-results-container').addClass('visible');
-			$("#search-field").focus();
-			console.log("open search");
+
+			//using a timeout because it's just not quite quick enough otherwise.
+			setTimeout(function() { $("#search-field").focus() }, 250);
 		} else {
 			$('#songSearch').removeClass('open');
 			$('#search-results-container').removeClass('visible');
 			$("#search-field").val("");
 			$("#search-results").empty();
-			console.log("close search");
 		}
 
 		if($('#add-song-prompt') !== null) {

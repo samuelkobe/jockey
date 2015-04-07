@@ -23,6 +23,10 @@ handlers:
   static_dir: js
   secure: always
 
+- url: /fonts
+  static_dir: fonts
+  secure: always
+
 
 skip_files:
 # Default patterns skipped by App Engine, which must be repeated since
