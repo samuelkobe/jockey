@@ -1,5 +1,24 @@
 /*-------------------------------------------------------
 
+    Fonts
+
+-------------------------------------------------------*/
+
+@font-face {
+    font-family: 'Leitura';
+    src: url('../fonts/Leitura Display Swashes-webfont.eot');
+    src: url('../fonts/Leitura Display Swashes-webfont.eot?#iefix') format('embedded-opentype'),
+         url('../fonts/Leitura Display Swashes-webfont.woff2') format('woff2'),
+         url('../fonts/Leitura Display Swashes-webfont.woff') format('woff'),
+         url('../fonts/Leitura Display Swashes-webfont.ttf') format('truetype'),
+         url('../fonts/Leitura Display Swashes-webfont.svg#leitura_displayswashes') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+/*-------------------------------------------------------
+
     Scrollbars
 
 -------------------------------------------------------*/
@@ -177,6 +196,37 @@ body {
 
   .track-info {
     margin-left: 60px;
+  }
+
+  .rating {
+    float: right;
+    display: inline-block;
+    font-size: 45px;
+    text-align: left;
+    opacity: 0.8;
+    color: #4159aa;
+    font-family: 'Leitura', serif;
+    line-height: 1.4;
+    overflow: visible;
+    text-overflow: initial;
+    width: 55px;
+    text-align: center;
+    letter-spacing: -2px;
+    margin-right: -5px;
+  }
+
+  li.playing .rating {
+    color: rgba(0,0,0,0);
+    background: url('../images/icons/sound-on-playing.svg');
+    background-repeat: no-repeat;
+    background-position: 15px 8px;
+  }
+
+  #playlist .track-info {
+    width: 10000%;
+    display: inline-block;
+    margin-left: 15px;
+    max-width: calc(100% - 120px);
   }
 
     .track-info h1 {
@@ -708,7 +758,9 @@ span.sc-duration {
   .sc-player li.active img.bgwidth { 
     width: 100%;
     height: auto; 
+    width: calc(100% - 40px);
   }
+
   .sc-player li.active img.bgheight { 
     height: 100%; 
     width: auto;

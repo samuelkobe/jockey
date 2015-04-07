@@ -374,6 +374,7 @@
           // log('will load', url);
           audioEngine.load(track, apiKey);
         }
+        checkPlaying();
       },
       getPlayerData = function(node) {
         return players[$(node).data('sc-player').id];
