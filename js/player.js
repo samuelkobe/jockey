@@ -19,33 +19,38 @@ function searchTracks(query) {
 	SC.get('/tracks', {q: query}, function(tracks) {
 	    $(tracks).each(function(index, track) {
 	    	// get the track image
-			var img = document.createElement('img');
-			if (!track.artwork_url) {
-				img.src = 'images/artwork-placeholder.jpg'
-			} else {
-				img.src = track.artwork_url;
+
+	    	if (track.streamable) {
+
+				var img = document.createElement('img');
+				if (!track.artwork_url) {
+					img.src = 'images/artwork-placeholder.jpg'
+				} else {
+					img.src = track.artwork_url;
+				}
+
+				// get the track information
+				var info = document.createElement('div');
+				info.className = "track-info";
+				var artistName = document.createElement('h1');
+				artistName.innerText = track.user.username;
+				var trackName = document.createElement('h2');
+				trackName.innerText = track.title;
+				info.appendChild(artistName);
+				info.appendChild(trackName);
+
+				// get the url
+				var trackUrl = document.createElement('p');
+				trackUrl.innerText = track.permalink_url;
+
+		    	//create the result
+		    	var result = document.createElement('li');
+		    	result.appendChild(img);
+				result.appendChild(info);
+				result.appendChild(trackUrl);
+				$('#search-results').append(result);
 			}
-
-			// get the track information
-			var info = document.createElement('div');
-			info.className = "track-info";
-			var artistName = document.createElement('h1');
-			artistName.innerText = track.user.username;
-			var trackName = document.createElement('h2');
-			trackName.innerText = track.title;
-			info.appendChild(artistName);
-			info.appendChild(trackName);
-
-			// get the url
-			var trackUrl = document.createElement('p');
-			trackUrl.innerText = track.permalink_url;
-
-	    	//create the result
-	    	var result = document.createElement('li');
-	    	result.appendChild(img);
-			result.appendChild(info);
-			result.appendChild(trackUrl);
-			$('#search-results').append(result);
+			
 	    });
 	});
 }
@@ -194,16 +199,12 @@ $(document).ready(function() {
 			$("#search-results").empty();
 			console.log("close search");
 		}
-	});	
 
-	$('#search-results li').click(function() {
-		alert("hey!");
-		/*
-		$('#songSearch').removeClass('open');
-		$('#search-results-container').removeClass('visible');
-		$("#search-field").val("");
-		$("#search-results").empty();
-		*/
+		if($('#add-song-prompt') !== null) {
+			$('#add-song-prompt').slideUp(250, function(){ 
+				$('#add-song-prompt').remove();
+			});	
+		}
 	});	
 
 	$('#clearSearchBtn').click(function() {
@@ -233,8 +234,10 @@ $(document).ready(function() {
 
 
 	$('#remove-song-prompt').click(function() {
-		$('#add-song-prompt').remove();
-	});	
+		$('#add-song-prompt').slideUp(250, function(){ 
+			$('#add-song-prompt').remove();
+		});	
+	});
 
 });
 

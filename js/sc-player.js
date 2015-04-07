@@ -362,6 +362,7 @@
         getImgColor(function() {
           getColor();
         });
+        resizeArtwork();
       },
       play = function(track) {
         var url = track.permalink_url;
@@ -561,7 +562,7 @@
           $.each(tracks, function(index, track) {
             var active = index === 0;
             // create an item in the playlist
-            $('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:index}).toggleClass('active', active).appendTo($list);
+            $('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:index}).toggleClass('active', active).prependTo($list);
             // create an item in the artwork list
             $('<li></li>')
               .append(artworkImage(track, index >= opts.loadArtworks))
@@ -638,9 +639,11 @@
       var $player = $(this);
     },
     // initialization, when dom is ready
+
     onDomReady  : function() {
       $('a.sc-player, div.sc-player').scPlayer();
     },
+
     autoPlay: false,
     continuePlayback: true,
     randomize: false,
@@ -764,10 +767,50 @@
   });
   // -------------------------------------------------------------------
 
+
+
+
+  // Adding tracks to already initialized playlist!
+
+
+  $.scPlayer.loadTrackInfoAndPlay=function($elem,track){
+      var playerObj=players[$elem.data('sc-player').id];
+      playerObj.tracks.push(track);
+      var index =playerObj.tracks.length-1;
+      var $list=$(playerObj.node).find('.sc-trackslist');
+      var $artworks=$(playerObj.node).find(".sc-artwork-list");
+      // add to playlist
+      var $li=$('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>')
+          .data('sc-track', {id:index})
+          .appendTo($list);
+      // add to artwork list
+      $('<li></li>')
+          .append(artworkImage(track, true))
+          .appendTo($artworks)
+          .data('sc-track', track);
+
+      /*
+      $li.click();
+      */
+  }
+
+
+  $.scPlayer.loadTrackUrlAndWait=function($elem,url){
+      var apiUrl = scApiUrl(url, apiKey);
+      $.getJSON(apiUrl, function(data) {
+          if(data.duration){
+            data.permalink_url = url;
+            $.scPlayer.loadTrackInfoAndPlay($elem,data);//Call the previous function
+          }
+      });
+  }
+
+
   // the default Auto-Initialization
 
   function creatingSoundCloudPlayer() {
     if($.isFunction($.scPlayer.defaults.onDomReady)){
       $.scPlayer.defaults.onDomReady();
     }
+    console.log("create player");
   }

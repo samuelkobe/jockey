@@ -1,18 +1,3 @@
-/**
- * Copyright 2013 Google Inc. All Rights Reserved.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
 
 var VERSION = 'v1.0';
 var IS_DEBUG = false;
@@ -340,19 +325,22 @@ function logDebug(msg) {
 function addFirstSongToPlaylist() {
     if (playlist.length > 0) {
         for (var i = 0; i < playlist.length; i++) {
-          if (i == 0) {
-            $('<a />').attr({
-              href: playlist.get(0)[0]
-            }).appendTo($('div.sc-player'));
+          var url = playlist.get(i)[0];
 
+          if (i < 1) {
+            $('<a />').attr({ href: url }).appendTo($('div.sc-player'));
             creatingSoundCloudPlayer();
+            $("div.sc-player").removeClass("uninitialized");
+            $("#player-container").removeClass("uninitialized");
+
+            console.log("added first song");
           } else {
-            // add it in the right spot in sc-player
+            var $myPlayer=$("#player-container .sc-player");//Top player
+            $.scPlayer.loadTrackUrlAndWait($myPlayer,url);
+            console.log("added additional song");
           }
+
         }
-      $("div.sc-player").removeClass("uninitialized");
-    } else {
-        
     }
 }
 
@@ -375,19 +363,15 @@ $(function() {
       var song = [url, img, artist, title, playing, rating, whoAdded];
       
       playlist.push(song);
-      if ($("div.sc-player").hasClass("uninitialized")) {
+      if ($("#player-container").hasClass("uninitialized") || $('div.sc-player').hasClass("uninitialized")) {
         $("div.sc-player").removeClass("uninitialized");
-
-        //var newSong = document.createElement('a');
-        //newSong.attr("href", urlToLoad);
-
-        $('<a />').attr({
-          href: url
-        }).appendTo($('div.sc-player'));
+        $("#player-container").removeClass("uninitialized");
+        $('<a />').attr({ href: url }).appendTo($('div.sc-player'));
         creatingSoundCloudPlayer();
-        // add a song to the song as a child and initialize the badass scPlayer
       } else {
         // just add a song to the existing scPlayer
+            var $myPlayer=$("#player-container .sc-player");//Top player
+            $.scPlayer.loadTrackUrlAndWait($myPlayer,url);
       }
     closeMenu();
   });
