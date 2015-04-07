@@ -318,6 +318,11 @@ function logDebug(msg) {
   }
 }
 
+function closeMenu() {
+    $('#songSearch').removeClass('open');
+    $('#search-results-container').removeClass('visible');
+}
+
 // JQUERY CODE //
 
 $(function() {
@@ -331,5 +336,7 @@ $(function() {
       
       playlist.push(song);
       console.log(playlist.get(playlist.length-1));
+
+      closeMenu();
   });
 });

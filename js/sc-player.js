@@ -9,7 +9,6 @@
 *   <a href="http://soundcloud.com/matas/hobnotropic" class="sc-player">My new dub track</a>
 *   The link will be automatically replaced by the HTML based player
 */
-(function($) {
 
   //for getting color
   function getImgColor(callback) {
@@ -773,33 +772,3 @@
       $.scPlayer.defaults.onDomReady();
     }
   }
-
-  $(function() {
-
-    doShit();
-
-    $('body').on('click', '#playlist li', function() {
-      var urlToLoad = $(this).find('p.url-to-load').text();
-
-      // check if player has any songs added to it yet
-      if ($("div.sc-player").hasClass("uninitialized")) {
-        $("div.sc-player").removeClass("uninitialized");
-
-        //var newSong = document.createElement('a');
-        //newSong.attr("href", urlToLoad);
-
-        $('<a />').attr({
-          href: urlToLoad
-        }).appendTo($('div.sc-player'));
-
-        doShit();
-        // add a song to the song as a child and initialize the badass scPlayer
-      } else {
-        // just add a song to the existing scPlayer
-      }
-    });
-
-
-  });
-
-})(jQuery);
