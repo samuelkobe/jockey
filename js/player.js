@@ -234,6 +234,13 @@ $(document).ready(function() {
 
 		// change tha score!
 
+		var newRating = $('#numbers li.my-score').attr('value');
+
+		console.log(newRating);
+
+		changeScore(newRating);
+		generatePlaylistItems();
+  		checkPlaying();
 
 	});	
 

@@ -399,12 +399,16 @@
         };
         updatePlayStatus(player, true);
         play(track);
+        //nextMaybe();
       },
       onPause = function(player) {
         updatePlayStatus(player, false);
         audioEngine.pause();
       },
       onFinish = function() {
+
+        finishPlaying();
+
         var $player = updates.$played.closest('.sc-player'),
             $nextItem;
         // update the scrubber width
@@ -425,6 +429,7 @@
         // getImgColor(function() {
         //   getColor();
         // });
+        checkPlaying();
 
       },
       onSeek = function(player, relative) {
