@@ -339,7 +339,7 @@ function logDebug(msg) {
 
 function addFirstSongToPlaylist() {
     if (playlist.length > 0) {
-        for (var i = 0; i< playlist.length; i++) {
+        for (var i = 0; i < playlist.length; i++) {
           if (i == 0) {
             $('<a />').attr({
               href: playlist.get(0)[0]
@@ -354,6 +354,11 @@ function addFirstSongToPlaylist() {
     } else {
         
     }
+}
+
+function closeMenu() {
+  $('#songSearch').removeClass('open');
+  $('#search-results-container').removeClass('visible');
 }
 
 // JQUERY CODE //
@@ -384,5 +389,6 @@ $(function() {
       } else {
         // just add a song to the existing scPlayer
       }
+    closeMenu();
   });
 });

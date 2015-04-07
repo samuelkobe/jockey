@@ -11,9 +11,9 @@ jQuery(function($) {
 
 -------------------------------------------------------*/
 
-	SC.initialize({
-	  client_id: 'YOUR_CLIENT_ID'
-	});
+SC.initialize({
+  client_id: 'YOUR_CLIENT_ID'
+});
 
 function searchTracks(query) {
 	SC.get('/tracks', {q: query}, function(tracks) {
@@ -182,10 +182,28 @@ $(document).ready(function() {
 
 
 	$('#addSongBtn').click(function() {
-		$('#songSearch').toggleClass('open');
+		if (!($("#songSearch").hasClass("open"))) {
+			$('#songSearch').addClass('open');
+			$('#search-results-container').addClass('visible');
+			$("#search-field").focus();
+			console.log("open search");
+		} else {
+			$('#songSearch').removeClass('open');
+			$('#search-results-container').removeClass('visible');
+			$("#search-field").val("");
+			$("#search-results").empty();
+			console.log("close search");
+		}
+	});	
+
+	$('#search-results li').click(function() {
+		alert("hey!");
+		/*
+		$('#songSearch').removeClass('open');
+		$('#search-results-container').removeClass('visible');
 		$("#search-field").val("");
-		$("#search-field").focus();
-		$('#search-results-container').toggleClass('visible');
+		$("#search-results").empty();
+		*/
 	});	
 
 	$('#clearSearchBtn').click(function() {

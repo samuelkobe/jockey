@@ -153,6 +153,10 @@ body {
     padding-right: 50px;
   }
 
+  #search-results li:active {
+    background: #d9e7ff;
+  }
+
   .collaborator img {
     border-radius: 50%;
     height: 50px;
@@ -1059,24 +1063,25 @@ span.sc-duration {
 button#shareButton, .got-it-button {
   font-size: 12px;
   background: rgba(0,0,0,0);
-  color: rgba(0,0,0,0.3);
   outline: none !important;
-  border: 2px solid rgba(0,0,0,0.1);
   border-radius: 0;
   padding: 12px 15px;
   position: relative;
-  margin: 20px 15px;
   display: block;
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
-}
-
-.got-it-button {
   clear: both;
   margin: 0px auto;
   border: 2px solid #06d6a0;
   color: #08bf8b;
+}
+
+button#shareButton {
+  background-image: url('../images/icons/drive.svg');
+  background-repeat: no-repeat;
+  background-position: 15px center;
+  padding: 15px 20px 15px 60px;
 }
 
 .button:disabled, .button[disabled=disabled], .disabled  .button, .button.disabled, .button.disabled:hover, .button.disabled:active {
@@ -1202,4 +1207,34 @@ button#confirm-score.visible {
 .onboarding-prompt p span {
   font-weight: bold;
   color: #08bf8b;
+}
+
+
+/*-------------------------------------------------------
+
+    Invite
+
+-------------------------------------------------------*/
+
+div#dimmer {
+  position: fixed;
+  z-index: 25;
+  background: #f7f7f7;
+  height: 100%;
+  width: 100%;
+  opacity: 0.8;
+}
+
+div#invite-modal {
+  position: fixed;
+  z-index: 30;
+  background: #fff;
+  box-shadow: 0 6px 10px 0 rgba(0, 0, 0, 0.3);
+  width: 90%;
+  max-width: 500px;
+  left: 50%;
+  top: 50%;
+  transform: translateX(-50%) translateY(-50%);
+  padding: 15px;
+  box-sizing: border-box;
 }

@@ -44,6 +44,7 @@
 
 <!-- Start RealTime when the body has loaded. -->
 <body onLoad='startJockey()'>
+
 		<nav class="people">
 			<ul>
 				<li id="djBtn" class="selected">DJs</li>
@@ -63,9 +64,6 @@
 
 				<div id="people-container" class="three-column">
 					<div class="list-container">
-						<div class="narrow-container">
-							<button id="shareButton" class="button button-share" onclick="showShareDialog()">Sharing Settings</button>
-						</div>
 						<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
 						<div id="collaborators">
 							<div id="collaborators-container">
@@ -106,9 +104,9 @@
 			<div id="minimize-icon">
 				<span></span>
 			</div>
-
+      
 			<div class="sc-player uninitialized">
-				
+			
 			</div>
 
 			<div id="hip-box-hidden"></div>
@@ -139,6 +137,19 @@
 			<button id="confirm-score">Confirm</button>
 		</div>
 
-		<script src='js/debiki-utterscroll.js'></script>
+		<div id="dimmer"></div>
+
+		<div id="invite-modal">
+			<button id="shareButton" class="button button-share" onclick="showShareDialog()">Set Share Options</button>
+			<p>Share the URL via:</p>
+			<ul id="share-methods">
+				<li>Google Plus</li>
+				<li>Twitter</li>
+				<li>Facebook</li>
+				<li>Copy to clipboard</li>
+			</ul>
+		</div>
+
+	<script src='js/debiki-utterscroll.js'></script>
 </body>
 </html>
