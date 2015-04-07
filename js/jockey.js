@@ -61,12 +61,10 @@ var realTimeOptions = {
 };
 
 function showShareDialog() {
-  console.log("show share dialog");
   var shareClient = new gapi.drive.share.ShareClient(realTimeOptions.appId);
   shareClient.setItemIds(rtclient.params['fileId']);
   shareClient.showSettingsDialog();
 }
-
 
 function startJockey() {
   logDebug('Starting Jockey');
@@ -75,18 +73,18 @@ function startJockey() {
   // realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
 }
 
-var AXIS_X = 'x';
-var AXIS_Y = 'y';
-var AXIS_Z = 'z';
+// var AXIS_X = 'x';
+// var AXIS_Y = 'y';
+// var AXIS_Z = 'z';
 
-var MOVE_AXIS_KEY = 'axis';
-var MOVE_LAYER_KEY = 'layer';
-var MOVE_DIRECTION_KEY = 'dir'
+// var MOVE_AXIS_KEY = 'axis';
+// var MOVE_LAYER_KEY = 'layer';
+// var MOVE_DIRECTION_KEY = 'dir'
 
-var MOVES_KEY = 'moves';
+// var MOVES_KEY = 'moves';
 
-var rubik;
-var movesList;
+// var rubik;
+// var movesList;
 
 var collabDoc;
 
@@ -106,10 +104,7 @@ var GLOBAL_USER_NAME;
  
 function initializeModel(model) {
   logDebug('initializeModel');
-  model.getRoot().set(MOVES_KEY, model.createList());
-
-  var string = model.createString('Jockey Rockeys');
-  model.getRoot().set('text', string);
+  // model.getRoot().set(MOVES_KEY, model.createList());
 
   model.getRoot().set(PLAYLIST, model.createList());
 }
@@ -145,12 +140,7 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, addedToPlaylist);
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
-
-  $( document ).ready(function() {
-    for(i = 0; i < playlist.length; i++) {
-      $( "#playlist" ).append("<li>" + playlist.get(i)[0] + "</li>");
-    }
-  });
+  generatePlaylistItems();
 
   // var string = doc.getModel().getRoot().get('text');
 
@@ -173,17 +163,46 @@ function onFileLoaded(doc) {
   // // Enabling UI Elements.
   // textArea1.disabled = false;
   // textArea2.disabled = false;
+  addFirstSongToPlaylist();
+}
+
+function generatePlaylistItems() {
+    $('#playlist').empty();
+
+    for(var i = 0; i < playlist.length; i++) {
+      // get the track image
+      var img = document.createElement('img');
+      img.src = playlist.get(i)[1];
+      
+      // get the track information
+      var info = document.createElement('div');
+      info.className = "track-info";
+      var artistName = document.createElement('h1');
+      artistName.innerText = playlist.get(i)[2]
+      var trackName = document.createElement('h2');
+      trackName.innerText = playlist.get(i)[3]
+      info.appendChild(artistName);
+      info.appendChild(trackName);
+
+      // get the url
+      var trackUrl = document.createElement('p');
+      trackUrl.innerText = playlist.get(i)[0]
+
+      //create the result
+      var result = document.createElement('li');
+      result.appendChild(img);
+      result.appendChild(info);
+      result.appendChild(trackUrl);
+      $('#playlist').append(result);
+    }
 }
 
 function addedToPlaylist(e) {
-    $( document ).ready(function() {
-      $( "#playlist" ).append("<li>" + playlist.get(playlist.length-1)[0] + "</li>");
-  });
+    generatePlaylistItems();
 }
 
 function removedFromPlaylist(e) {
 
-  console.log("removed a song.");
 }
 
 function onCollaboratorsChanged(e) {
@@ -318,18 +337,52 @@ function logDebug(msg) {
   }
 }
 
-// JQUERY CODE //
+function addFirstSongToPlaylist() {
+    if (playlist.length > 0) {
+        for (var i = 0; i< playlist.length; i++) {
+          if (i == 0) {
+            $('<a />').attr({
+              href: playlist.get(0)[0]
+            }).appendTo($('div.sc-player'));
 
+            creatingSoundCloudPlayer();
+          } else {
+            // add it in the right spot in sc-player
+          }
+        }
+      $("div.sc-player").removeClass("uninitialized");
+    } else {
+        
+    }
+}
+
+// JQUERY CODE //
 $(function() {
   $('body').on('click', '#search-results li', function() {
       var url = $(this).find("p:first").text();
+      var img = $(this).find("img:first").attr("src");
+      var artist = $(this).find("h1:first").text();
+      var title = $(this).find("h2:first").text();
       var playing = false;
-      var score = 0;
+      var rating = 0;
       var whoAdded = GLOBAL_USER_NAME;
 
-      var song = [url, playing, score, whoAdded];
+      var song = [url, img, artist, title, playing, rating, whoAdded];
       
       playlist.push(song);
-      console.log(playlist.get(playlist.length-1));
+      if ($("div.sc-player").hasClass("uninitialized")) {
+        $("div.sc-player").removeClass("uninitialized");
+
+        //var newSong = document.createElement('a');
+        //newSong.attr("href", urlToLoad);
+
+        $('<a />').attr({
+          href: url
+        }).appendTo($('div.sc-player'));
+        creatingSoundCloudPlayer();
+        // add a song to the song as a child and initialize the badass scPlayer
+      } else {
+        // just add a song to the existing scPlayer
+      }
   });
 });
