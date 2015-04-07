@@ -9,16 +9,24 @@ var realTimeOptions = {
   /**
    * Client ID from the API console.
    */
-   // Production Client Id
-   //clientId: "597181394454-vc9i6sa8k4jj6vutjui0kd10dnnvjllh.apps.googleusercontent.com",
+   // Production Jockey-Player Client Id
+   clientId: "470743367704-vmhe2haho8smjdq5uo86g74kpugrr5ig.apps.googleusercontent.com",
+
+   // OLD traaaaacks Client ID
+   //clientId: "597181394454-242qbcjc2ch77rmtaoks67gb57vnt8a2.apps.googleusercontent.com",
 
    //Local Client Id
-   clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
+   //clientId: "597181394454-dogbe836tp8mjtoq69og51qmmrj6psuh.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
    */
-   appId: 597181394454,
+
+   //Old Traaacks and Local appId
+   // appId: 597181394454,
+
+   //New Jockey-Player Production
+   appId: 470743367704,
 
   /**
    * Function to be called when a RealTime model is first created.
