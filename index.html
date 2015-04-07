@@ -64,6 +64,12 @@
 
 				<div id="people-container" class="three-column">
 					<div class="list-container">
+						<div id="add-person-prompt" class="onboarding-prompt">
+							<p><span>Invite friends</span> to contribute to the shared playlist.</p>
+							<br>
+							<button class="got-it-button" id="remove-invite-prompt">Ok, got it</button>
+						</div>
+
 						<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
 						<div id="collaborators">
 							<div id="collaborators-container">
@@ -134,11 +140,12 @@
 
 			<button id="confirm-score">Confirm</button>
 		</div>
-<!--
+
 		<div id="dimmer"></div>
 
 		<div id="invite-modal">
-			<button id="shareButton" class="button button-share" onclick="showShareDialog()">Set Share Options</button>
+			<button id="shareButton" class="button button-share" onclick="showShareDialog()">Edit Share Options</button>
+			<!--
 			<p>Share the URL via:</p>
 			<ul id="share-methods">
 				<li>Google Plus</li>
@@ -146,8 +153,8 @@
 				<li>Facebook</li>
 				<li>Copy to clipboard</li>
 			</ul>
+			-->
 		</div>
-	-->
 
 	<script src='js/debiki-utterscroll.js'></script>
 </body>

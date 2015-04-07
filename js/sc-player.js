@@ -323,7 +323,7 @@
         }else if (track.artwork_url) {
           return '<img src="' + track.artwork_url.replace('-large', '-t300x300') + '"/>';
         }else{
-          return '<div class="sc-no-artwork">No Artwork</div>';
+          return '<img src="../images/default-artwork.jpg"/>';
         }
       },
       updateTrackInfo = function($player, track) {

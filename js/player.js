@@ -50,7 +50,7 @@ function searchTracks(query) {
 				result.appendChild(trackUrl);
 				$('#search-results').append(result);
 			}
-			
+
 	    });
 	});
 }
@@ -238,6 +238,28 @@ $(document).ready(function() {
 			$('#add-song-prompt').remove();
 		});	
 	});
+
+	$('#remove-invite-prompt').click(function() {
+		$('#add-person-prompt').slideUp(250, function(){ 
+			$('#add-person-prompt').remove();
+		});	
+	});
+
+	$('#inviteBtn').click(function() {
+		$('#dimmer').addClass('visible');
+		$('#invite-modal').addClass('visible');
+		if($('#add-person-prompt') !== null) {
+			$('#add-person-prompt').slideUp(250, function(){ 
+				$('#add-person-prompt').remove();
+			});	
+		}
+	});
+
+	$('#dimmer').click(function() {
+		$('#dimmer').removeClass('visible');
+		$('#invite-modal').removeClass('visible');
+	});
+
 
 });
 
