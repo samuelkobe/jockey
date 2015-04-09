@@ -406,9 +406,7 @@
         audioEngine.pause();
       },
       onFinish = function() {
-
         finishPlaying();
-
         var $player = updates.$played.closest('.sc-player'),
             $nextItem;
         // update the scrubber width
@@ -420,17 +418,10 @@
         // stop the audio
         audioEngine.stop();
         $player.trigger('onPlayerTrackFinish');
-
-
         $('#draggable').animate({
           scrollLeft: 0
         }, 200, "easeOutCubic");
-
-        // getImgColor(function() {
-        //   getColor();
-        // });
         checkPlaying();
-
       },
       onSeek = function(player, relative) {
         audioEngine.seek(relative);
@@ -794,10 +785,6 @@
           .append(artworkImage(track, true))
           .appendTo($artworks)
           .data('sc-track', track);
-
-      /*
-      $li.click();
-      */
   }
 
 
@@ -818,5 +805,4 @@
     if($.isFunction($.scPlayer.defaults.onDomReady)){
       $.scPlayer.defaults.onDomReady();
     }
-    console.log("create player");
   }
