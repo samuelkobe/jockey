@@ -11,11 +11,6 @@ handlers:
   upload: index.html
   secure: always
 
-  - url: /
-  static_files: home.html
-  upload: home.html
-  secure: always
-
 - url: /css
   static_dir: css
   secure: always

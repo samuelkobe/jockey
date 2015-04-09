@@ -751,6 +751,8 @@ span.sc-duration {
   width: calc(100% - 40px);
   height: auto;
   transform: translateY(-50%) translateX(-50%);
+  -webkit-transform: translateY(-50%) translateX(-50%);
+  -moz-transform: translateY(-50%) translateX(-50%);
   top: 50%;
   left: 50%;
 }
@@ -1264,6 +1266,8 @@ div#invite-modal {
   left: 50%;
   top: 50%;
   transform: translateX(-50%) translateY(-50%) scale(0);
+  -webkit-transform: translateX(-50%) translateY(-50%) scale(0);
+  -moz-transform: translateX(-50%) translateY(-50%) scale(0);
   padding: 15px;
   box-sizing: border-box;
   transition:         all 350ms ease;
@@ -1274,4 +1278,6 @@ div#invite-modal {
 #invite-modal.visible {
   top: 50%;
   transform: translateX(-50%) translateY(-50%) scale(1);
+  -webkit-transform: translateX(-50%) translateY(-50%) scale(1);
+  -moz-transform: translateX(-50%) translateY(-50%) scale(1);
 }
