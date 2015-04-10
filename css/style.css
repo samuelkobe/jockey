@@ -216,22 +216,34 @@ body {
     margin-left: 60px;
   }
 
-  .rating {
+  .rating, .score {
     float: right;
     display: inline-block;
-    font-size: 45px;
+    font-size: 38px;
     text-align: left;
     opacity: 0.8;
-    color: #4159aa;
+    color: #333333;
     font-family: 'Leitura', serif;
-    line-height: 1.4;
+    line-height: 1.7;
     overflow: visible;
     text-overflow: initial;
-    width: 55px;
+    width: 60px;
     text-align: center;
     letter-spacing: -2px;
     margin-right: -5px;
     display: none;
+  }
+
+  .score {
+    display: inline-block;
+    width: initial;
+  }
+
+  .score span, .rating span {
+    font-family: sans-serif;
+    font-size: 13px;
+    letter-spacing: 0px;
+    font-family: 'Lato', sans-serif;
   }
 
   #playlist li.finished .rating {
@@ -1360,6 +1372,16 @@ ul#share-methods li {
   width: 45px;
   height: 45px;
   margin: 10px;
+  position: relative;
+}
+
+ul#share-methods li a {
+  width: 100%;
+  height: 100%;
+  display: inline-block;
+  position: absolute;
+  left: 0;
+  top: 0;
 }
 
 #share-methods li.twitter {
