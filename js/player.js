@@ -15,20 +15,31 @@ SC.initialize({
   client_id: 'YOUR_CLIENT_ID'
 });
 
+function inPlaylist(url) {
+	if (playlist.length > 0) {
+        for (var i = 0; i < playlist.length; i++) {
+          var playlistUrl = playlist.get(i)[0];
+          if (url == playlistUrl) {
+          	return true;
+          }	
+        }
+    }
+    else {
+    	return false;
+    }
+}
+
 function searchTracks(query) {
 	SC.get('/tracks', {q: query}, function(tracks) {
 	    $(tracks).each(function(index, track) {
 	    	// get the track image
-
 	    	if (track.streamable) {
-
 				var img = document.createElement('img');
 				if (!track.artwork_url) {
 					img.src = 'images/artwork-placeholder.jpg'
 				} else {
 					img.src = track.artwork_url;
 				}
-
 				// get the track information
 				var info = document.createElement('div');
 				info.className = "track-info";
@@ -48,6 +59,11 @@ function searchTracks(query) {
 		    	result.appendChild(img);
 				result.appendChild(info);
 				result.appendChild(trackUrl);
+
+				if (inPlaylist(track.permalink_url)) {
+					result.className = "duplicate";
+				}
+
 				$('#search-results').append(result);
 			}
 
@@ -231,17 +247,13 @@ $(document).ready(function() {
 		$('#numbers').removeClass('active')
 		$('#confirm-score').removeClass('visible');
 
-
 		// change tha score!
 
 		var newRating = $('#numbers li.my-score').attr('value');
 
-		console.log(newRating);
-
 		changeScore(newRating);
 		generatePlaylistItems();
   		checkPlaying();
-
 	});	
 
 
@@ -268,6 +280,11 @@ $(document).ready(function() {
 	});
 
 	$('#dimmer').click(function() {
+		$('#dimmer').removeClass('visible');
+		$('#invite-modal').removeClass('visible');
+	});
+
+	$('#close-icon').click(function() {
 		$('#dimmer').removeClass('visible');
 		$('#invite-modal').removeClass('visible');
 	});

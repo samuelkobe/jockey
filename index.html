@@ -45,6 +45,15 @@
 <!-- Start RealTime when the body has loaded. -->
 <body onLoad='startJockey()'>
 
+		<div id="authScreen">
+			<div class="auth-content">
+				<img src="images/drive-logo.svg">
+				<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
+				<br>
+				<p>Jockey uses Google Drive to store shared playlists.<br>Don't worry, no personal data is collected or shared.</p>
+			</div>
+		</div>
+
 		<nav class="people">
 			<ul>
 				<li id="djBtn" class="selected">PEOPLE</li>
@@ -70,8 +79,6 @@
 							<br>
 							<button class="got-it-button" id="remove-invite-prompt">Ok, got it</button>
 						</div>
-
-						<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
 						<div id="collaborators">
 							<div id="collaborators-container">
 							</div>
@@ -144,18 +151,21 @@
 		<div id="dimmer"></div>
 
 		<div id="invite-modal">
-			<button id="shareButton" class="button button-share" onclick="showShareDialog()">Edit Share Options</button>
-			<!--
-			<p>Share the URL via:</p>
+			<div class="invite-header">
+				<div id="close-icon"></div>
+				<button id="shareButton" class="button button-share" onclick="showShareDialog()">Change Settings</button>
+			</div>
+
+			<h1 id="shareUrl">goo.gl/4FDlMA</h1>
 			<ul id="share-methods">
-				<li>Google Plus</li>
-				<li>Twitter</li>
-				<li>Facebook</li>
-				<li>Copy to clipboard</li>
+				<li class="twitter"></li>
+				<li class="facebook"></li>
+				<li class="plus"></li>
 			</ul>
-			-->
+			<p class="sub-caption">Share your url</p>
 		</div>
 
 	<script src='js/debiki-utterscroll.js'></script>
+	<script src="https://apis.google.com/js/client.js"> </script>
 </body>
 </html>

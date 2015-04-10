@@ -140,7 +140,9 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
     if (authResult && !authResult.error) {
       _this.authButton.disabled = true;
       _this.fetchUserId(onAuthComplete);
+      $("#authScreen").remove();
     } else {
+      $("#authScreen").addClass("visible");
       _this.authButton.disabled = false;
       _this.authButton.onclick = authorizeWithPopup;
     }

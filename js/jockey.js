@@ -66,19 +66,6 @@ function startJockey() {
   // realTimeLoader.start(function(){document.getElementById("loading").style.display = ''});
 }
 
-// var AXIS_X = 'x';
-// var AXIS_Y = 'y';
-// var AXIS_Z = 'z';
-
-// var MOVE_AXIS_KEY = 'axis';
-// var MOVE_LAYER_KEY = 'layer';
-// var MOVE_DIRECTION_KEY = 'dir'
-
-// var MOVES_KEY = 'moves';
-
-// var rubik;
-// var movesList;
-
 var collabDoc;
 
 var PLAYLIST = 'playlist';
@@ -134,70 +121,68 @@ function onFileLoaded(doc) {
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
 
   generatePlaylistItems();
-  checkPlaying();
 
-  setTimeout(addFirstSongToPlaylist, 50);
-
-  playTheRightSong();
+  setTimeout(addFirstSongToPlaylist, 500);
 
 }
 
 function checkPlaying() {
     var playingUrl = $('.sc-player li.active a').attr("href");
-
     // add class playing to playlist item
     $("#playlist li").each(function() {
       var thisTrack = $(this);
       var listUrl = $(thisTrack).find("p:first").text();
       if (listUrl == playingUrl) {
         thisTrack.addClass("playing");
-        // console.log(playlist.set(i)[4]);
       } else {
         thisTrack.removeClass("playing");
-       //  playlist.set(i)[4] = false;
       }
     });
-
     for(var i = 0; i < playlist.length; i++) {
+      var tempPlaylist = playlist.get(i);
       if (playlist.get(i)[0] == playingUrl) {
-        var tempPlaylist = playlist.get(i);
+        console.log("song is playing");
         tempPlaylist[4] = true;
-        playlist.set(i, tempPlaylist);
       } else {
-        var tempPlaylist = playlist.get(i);
         tempPlaylist[4] = false;
-        playlist.set(i, tempPlaylist);
       }
+      playlist.set(i, tempPlaylist);
     }
 }
 
 function finishPlaying() {
-  var playingUrl = $('.sc-player li.active a').attr("href");
-  for(var i = 0; i < playlist.length; i++) {
-      if (playlist.get(i)[0] == playingUrl) {
-        var tempPlaylist = playlist.get(i);
-        tempPlaylist[6] = true;
-        playlist.set(i, tempPlaylist);
-        console.log(playlist.get(i)[6]);
-        console.log("song is finished fuck yeah");
+    var playingUrl = $('.sc-player li.active a').attr("href");
+    $("#playlist li").each(function() {
+      var thisTrack = $(this);
+      var listUrl = $(thisTrack).find("p:first").text();
+      if (listUrl == playingUrl) {
+        thisTrack.addClass("finished");
       }
-  }
+    });
+    for(var i = 0; i < playlist.length; i++) {
+      var tempPlaylist = playlist.get(i);
+      if (playlist.get(i)[4] == true) {
+        console.log("change to finished " + playlist.get(i)[0]);
+        tempPlaylist[7] = true;
+        playlist.set(i, tempPlaylist);
+      }
+    }
 }
 
-/*
+
 function playTheRightSong() {
   for(var i = 0; i < playlist.length; i++) {
-    if (playlist.get(i)[6] == false) {
+    if (playlist.get(i)[4] == 2) {
       var correctTrack = i+1;
       var rightSong = $("sc-trackslist li:nth-child(" + correctTrack + ")")
-      $nextItem.click();
-      return false;
-    } else {
-      stopAll();
+      $rightSong.click();
+      return true;
     }
   }
+  var rightSong = $("sc-trackslist li:nth-child(" + 1 + ")")
+  $rightSong.click();
+  return false;
 }
-*/
 
 function nextMaybe() {
   for(var i = 0; i < playlist.length; i++) {
@@ -211,7 +196,7 @@ function nextMaybe() {
 
 function changeScore(newScore) {
     for(var i = 0; i < playlist.length; i++) {
-      if (playlist.get(i)[4] == '1') {
+      if (playlist.get(i)[4] == true) {
         var tempPlaylist = playlist.get(i);
         tempPlaylist[5] = newScore;
         playlist.set(i, tempPlaylist);
@@ -253,14 +238,19 @@ function generatePlaylistItems() {
       result.appendChild(trackUrl);
       result.appendChild(rating);
 
+      if (playlist.get(i)[4]) {
+          result.className = "playing";
+      }
+      if (playlist.get(i)[7]) {
+          result.className = "finished";
+      }
+
       $('#playlist').append(result);
     }
-
 }
 
 function addedToPlaylist(e) {
     generatePlaylistItems();
-    // checkPlaying();
 }
 
 function removedFromPlaylist(e) {
@@ -399,25 +389,27 @@ function logDebug(msg) {
   }
 }
 
+function addSong(i) {
+  var url = playlist.get(i)[0];
+  if ($("#player-container").hasClass("uninitialized")) {
+    $('<a />').attr({ href: url }).appendTo($('div.sc-player'));
+    creatingSoundCloudPlayer();
+    $("div.sc-player").removeClass("uninitialized");
+    $("#player-container").removeClass("uninitialized");
+  } else {
+    var $myPlayer=$("#player-container .sc-player");//Top player
+    $.scPlayer.loadTrackUrlAndWait($myPlayer,url);
+  }
+}
+
 function addFirstSongToPlaylist() {
-    if (playlist.length > 0) {
-        for (var i = 0; i < playlist.length; i++) {
-          var url = playlist.get(i)[0];
-
-          if (i < 1) {
-            $('<a />').attr({ href: url }).appendTo($('div.sc-player'));
-            creatingSoundCloudPlayer();
-            $("div.sc-player").removeClass("uninitialized");
-            $("#player-container").removeClass("uninitialized");
-
-            console.log("added first song");
-          } else {
-            var $myPlayer=$("#player-container .sc-player");//Top player
-            $.scPlayer.loadTrackUrlAndWait($myPlayer,url);
-            console.log("added additional song");
-          }
+  if (playlist.length > 0) {
+      for (var i = 0; i < playlist.length; i++) {
+        if (!playlist.get(i)[7]) {
+          setTimeout(addSong(i), 500);
         }
-    }
+      }
+  }
 }
 
 function closeMenu() {
@@ -425,8 +417,14 @@ function closeMenu() {
   $('#search-results-container').removeClass('visible');
 }
 
-// JQUERY CODE //
+
 $(function() {
+
+  if ( document.referrer == null || document.referrer.indexOf(window.location.hostname) < 0 ) {
+      $('#add-song-prompt').addClass("visible");
+      $('#add-person-prompt').addClass("visible");
+  }
+
   $('body').on('click', '#search-results li', function() {
       var url = $(this).find("p:first").text();
       var img = $(this).find("img:first").attr("src");
