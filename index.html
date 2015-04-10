@@ -9,7 +9,7 @@
 
 
 	<!-- Setting styles, js & other meta tags -->
-	<link rel="stylesheet" href="css/style.css" />
+	<link rel="stylesheet" href="css/home.css"/>
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 	<meta content="utf-8" http-equiv="encoding">
 	<meta name="theme-color" content="#06D6A0">
@@ -20,152 +20,58 @@
 	<link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32" />
 	<link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16" />
 
-	<script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
-	<script type="text/javascript" src="js/jquery-ui.js"></script>
-
-  <!-- Load the utility library. -->
-  <script type="text/javascript" src="js/realtime-client-utils.js"></script>
-
-  <!-- Load our custom js/rt options for Jockey. -->
-  <script type="text/javascript" src="js/jockey.js"></script>
-
-	<script type="text/javascript" src="https://connect.soundcloud.com/sdk.js"></script>
-  	<script type="text/javascript" src="js/modenizer.js"></script>
-	<script type="text/javascript" src="js/soundcloud.player.api.js"></script>
-	<script type="text/javascript" src="js/sc-player.js"></script>
-	<script type="text/javascript" src='js/jquery-scrollable.js'></script>
-	<script type="text/javascript" src='js/jquery.adaptive-backgrounds.js'></script>
-	<script type="text/javascript" src='js/player.js'></script>  
-
-
 	<link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
 </head>
 
-<!-- Start RealTime when the body has loaded. -->
-<body onLoad='startJockey()'>
-
-		<div id="authScreen">
-			<div class="auth-content">
-				<img src="images/drive-logo.svg">
-				<button id="authorizeButton" disabled class="button button-submit">Authorize for Google Drive</button>
-				<br>
-				<p>Jockey uses Google Drive to store shared playlists.<br>Don't worry, no personal data is collected or shared.</p>
-			</div>
+<body>
+	<div id="hero">
+		<div class="left-padder"></div>
+		<div class="right-padder"></div>
+		<div class="top-padder"></div>
+		<div class="bottom-angle-left"></div>
+		<div class="bottom-angle-right"></div>
+		<div class="hero-content">
+			<img id="hero-logo" src="images/jockey-logo.svg" />
+			<br>
+			<a href="playlist.html"><button>Create new playlist</button></a>
 		</div>
+	</div>
 
-		<nav class="people">
-			<ul>
-				<li id="djBtn" class="selected">PEOPLE</li>
-				<li id="songsBtn">PLAYLIST</li>
-			</ul>
-			<div id="underline"></div>
-			<div id="inviteBtn"></div>
-			<div id="songSearch">
-				<div id="addSongBtn"></div>
-				<input type="text" name="query" id="search-field" class="unstyled" placeholder="Search for a track">
-				<div id="clearSearchBtn"></div>
-			</div>
-		</nav>
-
-		<div class="parent-container" id="main-parent">
-			<div id="scroll-container" class="people">
-
-				<div id="people-container" class="three-column">
-					<div class="list-container">
-
-						<div id="add-person-prompt" class="onboarding-prompt">
-							<p><span>Invite friends</span> to contribute to the shared playlist.</p>
-							<br>
-							<button class="got-it-button" id="remove-invite-prompt">Ok, got it</button>
-						</div>
-						<div id="collaborators">
-							<div id="collaborators-container">
-							</div>
-						</div>
-					</div>
-				</div>
-
-				<div id="playlist-container" class="three-column">
-
-					<div class="list-container">
-
-						<div id="add-song-prompt" class="onboarding-prompt">
-							<p><span>Add songs</span> to the shared playlist.</p>
-							<br>
-							<button class="got-it-button" id="remove-song-prompt">Ok, got it</button>
-						</div>
-												
-						<ol id="playlist">
-						</ol>
-					</div>
-
-
-					<div id="search-results-container" class="list-container">
-						<ul id="search-results">
-						</ul>
-					</div>
-				</div>
-			</div> <!-- END scroll-container -->
-		</div>  <!-- END parent-container -->
-
-		<div id="player-container" class="minimized uninitialized">
-			<div id="bg-overlay">
-				<span></span>
-			</div>
-			
-			<div id="minimize-icon">
-				<span></span>
-			</div>
-      
-			<div class="sc-player uninitialized"></div> 
-
-			<div id="hip-box-hidden"></div>
-			<div id="hip-box" class="stopped">
-				<div class="score-lable top">Rating</div>
-				<div class="score-lable bottom">/10</div>
+	<section id="about">
+		<div class="container">
+			<div class="narrow-it-down">
+				<h1>Everyone's a critic. Play your best.</h1>
+				<p>Jockey is a real-time collaborative playlist web-app. Build a playlist of songs with your friends, then rate each song while it's playing to determine who has the best taste!</p>
 			</div>
 
-			<div class="number-container offscreen" id="numberContainer">
-				<div id="draggable" class="offscreen">
-					<ol id="numbers">
-						<li value='empty' id="first-empty" class="number-spacer"></li>
-						<li value='1' class="my-score"><span></span></li>           <!-- 1 -->
-						<li value='2'><span></span></li>            <!-- 2 -->
-						<li value='3'><span></span></li>            <!-- 3 -->
-						<li value='4'><span></span></li>            <!-- 4 -->
-						<li value='5' id="middle-number"><span></span></li>           <!-- 5 -->
-						<li value='6'><span></span></li>            <!-- 6 -->
-						<li value='7'><span></span></li>            <!-- 7 -->
-						<li value='8'><span></span></li>            <!-- 8 -->
-						<li value='9'><span></span></li>            <!-- 9 -->
-						<li value='10'><span></span></li>           <!-- 10 -->
-						<li value='empty' id="last-empty" class="number-spacer"></li>
-					</ol>
-				</div>
+			<div class="quarter">
+				<img src="images/invite.svg" alt="invite">
+				<p><span>Invite</span> friends</p>
 			</div>
+			<div class="quarter">
+				<img src="images/add-songs.svg" alt="add">
+				<p><span>Add</span> tracks</p>
+			</div>
+			<div class="quarter">
+				<img src="images/listen.svg" alt="listen">
+				<p><span>Listen</span> to music</p>
+			</div>
+			<div class="quarter">
+				<img src="images/rate.svg" alt="rate">
+				<p><span>Rate</span> songs</p>
+			</div>
+			<div class="clearfix"></div>
 
-			<button id="confirm-score">Confirm</button>
+			<div class="narrow-it-down">
+				<h1>Thank you Google Drive &amp; Soundcloud.</h1>
+				<p>Jockey uses Google's realtime API to allow users to work collaboratively on playlists shared in Drive. Music is provided thanks to Soundcloud's vast database of songs.</p>
+			</div>
+			<img src="images/drive-soundcloud.svg" alt="drive and soundcloud" id="drive-sc">
 		</div>
-
-		<div id="dimmer"></div>
-
-		<div id="invite-modal">
-			<div class="invite-header">
-				<div id="close-icon"></div>
-				<button id="shareButton" class="button button-share" onclick="showShareDialog()">Change Settings</button>
-			</div>
-
-			<h1 id="shareUrl">goo.gl/4FDlMA</h1>
-			<ul id="share-methods">
-				<li class="twitter"></li>
-				<li class="facebook"></li>
-				<li class="plus"></li>
-			</ul>
-			<p class="sub-caption">Share your url</p>
-		</div>
-
-	<script src='js/debiki-utterscroll.js'></script>
-	<script src="https://apis.google.com/js/client.js"> </script>
+	</section>
+	<footer>
+		<p>Made by <a href="http://www.lalau.ca" target="_blank">Aaron La Lau</a> &amp; <a href="http://www.samuelkobe.com/" target="_blank">Samuel Kobe</a><br>at Simon Fraser University.</p>
+	</footer>
 </body>
 </html>

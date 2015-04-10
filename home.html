@@ -24,15 +24,54 @@
 	<link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
 </head>
 
-<!-- Start RealTime when the body has loaded. -->
 <body>
 	<div id="hero">
+		<div class="left-padder"></div>
+		<div class="right-padder"></div>
+		<div class="top-padder"></div>
+		<div class="bottom-angle-left"></div>
+		<div class="bottom-angle-right"></div>
 		<div class="hero-content">
 			<img id="hero-logo" src="images/jockey-logo.svg" />
-			<p>Everyone's a critic, play your best.</p>
 			<br>
-			<a href="index.html"><button>Create new playlist</button></a>
+			<a href="playlist.html"><button>Create new playlist</button></a>
 		</div>
 	</div>
+
+	<section id="about">
+		<div class="container">
+			<div class="narrow-it-down">
+				<h1>Everyone's a critic. Play your best.</h1>
+				<p>Jockey is a real-time collaborative playlist web-app. Build a playlist of songs with your friends, then rate each song while it's playing to determine who has the best taste!</p>
+			</div>
+
+			<div class="quarter">
+				<img src="images/invite.svg" alt="invite">
+				<p><span>Invite</span> friends</p>
+			</div>
+			<div class="quarter">
+				<img src="images/add-songs.svg" alt="add">
+				<p><span>Add</span> tracks</p>
+			</div>
+			<div class="quarter">
+				<img src="images/listen.svg" alt="listen">
+				<p><span>Listen</span> to music</p>
+			</div>
+			<div class="quarter">
+				<img src="images/rate.svg" alt="rate">
+				<p><span>Rate</span> songs</p>
+			</div>
+			<div class="clearfix"></div>
+
+			<div class="narrow-it-down">
+				<h1>Thank you Google Drive &amp; Soundcloud.</h1>
+				<p>Jockey uses Google's realtime API to allow users to work collaboratively on playlists shared in Drive. Music is provided thanks to Soundcloud's vast database of songs.</p>
+			</div>
+			<img src="images/drive-soundcloud.svg" alt="drive and soundcloud" id="drive-sc">
+		</div>
+	</section>
+	<footer>
+		<p>Made by <a href="http://www.lalau.ca" target="_blank">Aaron La Lau</a> &amp; <a href="http://www.samuelkobe.com/" target="_blank">Samuel Kobe</a><br>at Simon Fraser University.</p>
+	</footer>
 </body>
 </html>

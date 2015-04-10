@@ -103,27 +103,20 @@ function updateForRealTimeDoneInitializing() {
 function onFileLoaded(doc) {
   logDebug('onFileLoaded');
   collabDoc = doc;
-
   doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_JOINED, onCollaboratorsChanged);
   doc.addEventListener(gapi.drive.realtime.EventType.COLLABORATOR_LEFT, onCollaboratorsChanged);
-
   setTimeout(function() {
     updateForRealTimeDoneInitializing();
     setTimeout(function() {
       updateCollaborators();
     }.bind(this), 0);
   }.bind(this), 0);
-
   var model = doc.getModel();
   playlist = model.getRoot().get(PLAYLIST);
-
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_ADDED, addedToPlaylist);
   playlist.addEventListener(gapi.drive.realtime.EventType.VALUES_REMOVED, removedFromPlaylist);
-
   generatePlaylistItems();
-
   setTimeout(addFirstSongToPlaylist, 500);
-
 }
 
 function checkPlaying() {
@@ -141,7 +134,6 @@ function checkPlaying() {
     for(var i = 0; i < playlist.length; i++) {
       var tempPlaylist = playlist.get(i);
       if (playlist.get(i)[0] == playingUrl) {
-        console.log("song is playing");
         tempPlaylist[4] = true;
       } else {
         tempPlaylist[4] = false;
@@ -162,36 +154,10 @@ function finishPlaying() {
     for(var i = 0; i < playlist.length; i++) {
       var tempPlaylist = playlist.get(i);
       if (playlist.get(i)[4] == true) {
-        console.log("change to finished " + playlist.get(i)[0]);
         tempPlaylist[7] = true;
         playlist.set(i, tempPlaylist);
       }
     }
-}
-
-
-function playTheRightSong() {
-  for(var i = 0; i < playlist.length; i++) {
-    if (playlist.get(i)[4] == 2) {
-      var correctTrack = i+1;
-      var rightSong = $("sc-trackslist li:nth-child(" + correctTrack + ")")
-      $rightSong.click();
-      return true;
-    }
-  }
-  var rightSong = $("sc-trackslist li:nth-child(" + 1 + ")")
-  $rightSong.click();
-  return false;
-}
-
-function nextMaybe() {
-  for(var i = 0; i < playlist.length; i++) {
-    if (playlist.get(i)[4] == true) {
-       if (playlist.get(i)[5] > 0) {
-          onSkip();
-       }
-    } 
-  }
 }
 
 function changeScore(newScore) {
@@ -200,18 +166,17 @@ function changeScore(newScore) {
         var tempPlaylist = playlist.get(i);
         tempPlaylist[5] = newScore;
         playlist.set(i, tempPlaylist);
+        updateScore(playlist.get(i)[6]);
       }
     }
 }
 
 function generatePlaylistItems() {
     $('#playlist').empty();
-
     for(var i = 0; i < playlist.length; i++) {
       // get the track image
       var img = document.createElement('img');
-      img.src = playlist.get(i)[1];
-      
+      img.src = playlist.get(i)[1]; 
       // get the track information
       var info = document.createElement('div');
       info.className = "track-info";
@@ -221,15 +186,17 @@ function generatePlaylistItems() {
       trackName.innerText = playlist.get(i)[3]
       info.appendChild(artistName);
       info.appendChild(trackName);
-
       // get the url
       var trackUrl = document.createElement('p');
       trackUrl.innerText = playlist.get(i)[0]
-
       // get the score
       var rating = document.createElement('div');
       rating.className = "rating";
       rating.innerText = playlist.get(i)[5];
+
+      var pts = document.createElement('span');
+      pts.innerText = " /10";
+      rating.appendChild(pts);
 
       //create the result
       var result = document.createElement('li');
@@ -237,14 +204,12 @@ function generatePlaylistItems() {
       result.appendChild(info);
       result.appendChild(trackUrl);
       result.appendChild(rating);
-
       if (playlist.get(i)[4]) {
           result.className = "playing";
       }
       if (playlist.get(i)[7]) {
           result.className = "finished";
       }
-
       $('#playlist').append(result);
     }
 }
@@ -337,6 +302,33 @@ function getSessionIdFromCollaboratorDiv(collaboratorDiv) {
   return collaboratorDiv.id.substring(collaboratorDiv.id.indexOf('_') + 1);
 }
 
+
+
+
+function calculateUserScore(username) {
+  var score = 0;
+  if (playlist.length > 0) {
+      for (var i = 0; i < playlist.length; i++) {
+        if (playlist.get(i)[6] == username) {
+          score += playlist.get(i)[5];
+        }
+      }
+  }
+  return score;
+}
+
+function updateScore(name) {
+  $(".collaborator").each(function() {
+    var personName = $(this).find("h1:first").text();
+    if (personName == name) {
+      $(this).children(".score").text(calculateUserScore(name));
+      var pts = document.createElement('span');
+      pts.innerText = " pts";
+      $(this).children(".score").append(pts);
+    }
+  });
+}
+
 function genCollaboratorDiv(collaborator) {
   var collaboratorDiv = document.createElement('div');
   collaboratorDiv.id = getIdForCollaboratorDiv(collaborator);
@@ -351,8 +343,17 @@ function genCollaboratorDiv(collaborator) {
   imgDiv.setAttribute('alt', collaborator.displayName);
   imgDiv.setAttribute('src', collaborator.photoUrl);
 
+  var score = document.createElement('div');
+  score.className = "score";
+  score.innerText = calculateUserScore(collaborator.displayName);
+
+  var pts = document.createElement('span');
+  pts.innerText = " pts";
+  score.appendChild(pts);
+
   collaboratorDiv.appendChild(collaboratorName);
   collaboratorDiv.appendChild(imgDiv);
+  collaboratorDiv.appendChild(score);
 
   GLOBAL_USER_NAME = collaborator.displayName;
 
@@ -417,13 +418,37 @@ function closeMenu() {
   $('#search-results-container').removeClass('visible');
 }
 
+function GetCookie(name) {
+  var arg=name+"=";
+  var alen=arg.length;
+  var clen=document.cookie.length;
+  var i=0;
+  while (i<clen) {
+    var j=i+alen;
+    if (document.cookie.substring(i,j)==arg)
+    return "here";
+    i=document.cookie.indexOf(" ",i)+1;
+    if (i==0) 
+    break;
+  }
+  return null;
+}
 
 $(function() {
 
-  if ( document.referrer == null || document.referrer.indexOf(window.location.hostname) < 0 ) {
+  var visit=GetCookie("COOKIE1");
+
+  if (visit==null){
       $('#add-song-prompt').addClass("visible");
       $('#add-person-prompt').addClass("visible");
+  } else {
+    $('#add-song-prompt').remove();
+    $('#add-person-prompt').remove();
   }
+
+  var expire=new Date();
+  expire=new Date(expire.getTime()+7776000000);
+  document.cookie="COOKIE1=here; expires="+expire;
 
   $('body').on('click', '#search-results li', function() {
       var url = $(this).find("p:first").text();

@@ -149,6 +149,18 @@ function animateNav() {
 	}
 }
 
+function readyShareLinks() {
+	var currentUrl = window.location.href;
+	twitterUrl = "https://twitter.com/intent/tweet?url=" + currentUrl + ";text=You%27re%20invited%20to%20contribute%20to%20my%20playlist%20on;size=l&amp;count=none"
+	facebookUrl = "http://www.facebook.com/sharer/sharer.php?u=" + currentUrl;
+	gplusUrl = "https://plus.google.com/share?url=" + currentUrl;
+	$("#twitterLink").attr("href", twitterUrl);
+	$("#facebookLink").attr("href", facebookUrl);
+	$("#gplusLink").attr("href", gplusUrl);
+
+	$("#shareUrl").text(currentUrl);
+}
+
 /* ---------------------------
 
 		RUN
@@ -161,6 +173,7 @@ window.onload = function () {
     });
 	centerNumbers();
 	resizeArtwork();
+	readyShareLinks();
 }
 
 $(document).ready(function() {
@@ -246,11 +259,8 @@ $(document).ready(function() {
 	$('#confirm-score').click(function() {
 		$('#numbers').removeClass('active')
 		$('#confirm-score').removeClass('visible');
-
-		// change tha score!
-
+		// change the rating
 		var newRating = $('#numbers li.my-score').attr('value');
-
 		changeScore(newRating);
 		generatePlaylistItems();
   		checkPlaying();
