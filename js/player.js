@@ -7,7 +7,7 @@
 jQuery(function($) {
   if (!Modernizr.touch) { // if not a smartphone
     debiki.Utterscroll.enable({
-      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box' });
+      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box', '#invite-modal' });
   }
 });
 
