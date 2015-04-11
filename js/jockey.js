@@ -302,9 +302,6 @@ function getSessionIdFromCollaboratorDiv(collaboratorDiv) {
   return collaboratorDiv.id.substring(collaboratorDiv.id.indexOf('_') + 1);
 }
 
-
-
-
 function calculateUserScore(username) {
   var score = 0;
   if (playlist.length > 0) {
@@ -416,6 +413,9 @@ function addFirstSongToPlaylist() {
 function closeMenu() {
   $('#songSearch').removeClass('open');
   $('#search-results-container').removeClass('visible');
+  $('#playlist-container .list-container').animate({
+    scrollTop: $("#playlist li:last-child").offset().top
+  }, 500);
 }
 
 function GetCookie(name) {
@@ -451,6 +451,7 @@ $(function() {
   document.cookie="COOKIE1=here; expires="+expire;
 
   $('body').on('click', '#search-results li', function() {
+      $(this).addClass('duplicate');
       var url = $(this).find("p:first").text();
       var img = $(this).find("img:first").attr("src");
       var artist = $(this).find("h1:first").text();
