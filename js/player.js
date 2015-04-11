@@ -7,7 +7,7 @@
 jQuery(function($) {
   if (!Modernizr.touch) { // if not a smartphone
     debiki.Utterscroll.enable({
-      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box', '#invite-modal' });
+      scrollstoppers: 'nav, #djBtn, #songsBtn, #playingBtn, #hip-box, #invite-modal' });
   }
 });
 
@@ -160,7 +160,6 @@ function readyShareLinks() {
     jQuery.urlShortener({
         longUrl: currentUrl,
         success: function (shortUrl) {
-        	console.log(shortUrl);
             twitterUrl = "https://twitter.com/intent/tweet?url=" + shortUrl + ";text=You%27re%20invited%20to%20contribute%20to%20my%20music%20playlist%20on%20Jockey!;size=l&amp;count=none"
 		    facebookUrl = "http://www.facebook.com/sharer/sharer.php?u=" + shortUrl;
 		    gplusUrl = "https://plus.google.com/share?url=" + shortUrl;
