@@ -10,13 +10,13 @@ var realTimeOptions = {
    * Client ID from the API console.
    */
    // Production Jockey-Player Client Id
-   //clientId: "470743367704-vmhe2haho8smjdq5uo86g74kpugrr5ig.apps.googleusercontent.com",
+   clientId: "470743367704-vmhe2haho8smjdq5uo86g74kpugrr5ig.apps.googleusercontent.com",
 
    // OLD traaaaacks Client ID
    //clientId: "597181394454-242qbcjc2ch77rmtaoks67gb57vnt8a2.apps.googleusercontent.com",
 
    //Local Client Id
-   clientId: "470743367704-gt0rb9m8d077bmfd256pt8e5tjcgepki.apps.googleusercontent.com",
+   //clientId: "470743367704-gt0rb9m8d077bmfd256pt8e5tjcgepki.apps.googleusercontent.com",
 
   /**
    * Application ID from the API console.
