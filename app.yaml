@@ -11,6 +11,11 @@ handlers:
   upload: index.html
   secure: always
 
+- url: /playlist.html
+  static_files: playlist.html
+  upload: playlist.html
+  secure: always
+
 - url: /css
   static_dir: css
   secure: always
