@@ -309,7 +309,7 @@ loadTracksData = function($player, links, key) {
 				  playerObj.node.trigger({type:'onTrackDataLoaded', playerObj: playerObj, url: apiUrl});
 				}
 			});
-};
+	};
 		// update current API key
 		apiKey = key;
 		// update the players queue
@@ -508,8 +508,8 @@ loadTracksData = function($player, links, key) {
 	  });
 
 
-  // Generate custom skinnable HTML/CSS/JavaScript based SoundCloud players from links to SoundCloud resources
-  $.scPlayer = function(options, node) {
+ // Generate custom skinnable HTML/CSS/JavaScript based SoundCloud players from links to SoundCloud resources
+ $.scPlayer = function(options, node) {
   	var opts = $.extend({}, $.scPlayer.defaults, options),
   	playerId = players.length,
   	$source = node && $(node),
@@ -527,79 +527,79 @@ loadTracksData = function($player, links, key) {
 
   	//console.log(links[0]);
 
-		// add the classes of the source node to the player itself
-		// the players can be indvidually styled this way
-		if(sourceClasses || opts.customClass){
-			$player.addClass(sourceClasses).addClass(opts.customClass);
+	// add the classes of the source node to the player itself
+	// the players can be indvidually styled this way
+	if(sourceClasses || opts.customClass){
+		$player.addClass(sourceClasses).addClass(opts.customClass);
+	}
+
+
+	// adding controls to the player
+	$player
+	.find('.sc-controls')
+	.append('<a href="#play" class="sc-play">Play</a> <a href="#pause" class="sc-pause hidden">Pause</a>')
+	.end()
+	.append('<a href="#info" class="sc-info-toggle">Info</a>')
+	.append('<div class="sc-scrubber"></div>')
+	.find('.sc-scrubber')
+	.append('<div class="sc-volume-slider"><span class="sc-volume-status" style="width:' + soundVolume +'%"></span></div>')
+	.append('<div class="sc-time-span"><div class="sc-waveform-container"></div><div class="sc-buffer"></div><div class="sc-played"></div></div>')
+	.append('<div class="sc-time-indicators"><span class="sc-position"></span> | <span class="sc-duration"></span></div>');
+
+	// load and parse the track data from SoundCloud API
+	loadTracksData($player, links, opts.apiKey);
+	// init the player GUI, when the tracks data was laoded
+	$player.bind('onTrackDataLoaded.scPlayer', function(event) {
+		// log('onTrackDataLoaded.scPlayer', event.playerObj, playerId, event.target);
+		var tracks = event.playerObj.tracks;
+		if (opts.randomize) {
+		  	tracks = shuffle(tracks);
+		}
+		// create the playlist
+		$.each(tracks, function(index, track) {
+		  	var active = index === 0;
+			// create an item in the playlist
+			$('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:index}).toggleClass('active', active).prependTo($list);
+			// create an item in the artwork list
+			$('<li></li>')
+			.append(artworkImage(track, index >= opts.loadArtworks))
+			.appendTo($artworks)
+			.toggleClass('active', active)
+			.data('sc-track', track);
+		});
+		  // update the element before rendering it in the DOM
+		$player.each(function() {
+		  	if($.isFunction(opts.beforeRender)){
+		  		opts.beforeRender.call(this, tracks);
+		  	}
+		});
+		  // set the first track's duration
+		$('.sc-duration', $player)[0].innerHTML = timecode(tracks[0].duration);
+		$('.sc-position', $player)[0].innerHTML = timecode(0);
+		  // set up the first track info
+		updateTrackInfo($player, tracks[0]);
+
+		  // if continous play enabled always skip to the next track after one finishes
+		if (opts.continuePlayback) {
+		  	$player.bind('onPlayerTrackFinish', function(event) {
+		  		onSkip($player);
+		  	});
 		}
 
-
-		// adding controls to the player
+		  // announce the succesful initialization
 		$player
-		.find('.sc-controls')
-		.append('<a href="#play" class="sc-play">Play</a> <a href="#pause" class="sc-pause hidden">Pause</a>')
-		.end()
-		.append('<a href="#info" class="sc-info-toggle">Info</a>')
-		.append('<div class="sc-scrubber"></div>')
-		.find('.sc-scrubber')
-		.append('<div class="sc-volume-slider"><span class="sc-volume-status" style="width:' + soundVolume +'%"></span></div>')
-		.append('<div class="sc-time-span"><div class="sc-waveform-container"></div><div class="sc-buffer"></div><div class="sc-played"></div></div>')
-		.append('<div class="sc-time-indicators"><span class="sc-position"></span> | <span class="sc-duration"></span></div>');
+		.removeClass('loading')
+		.trigger('onPlayerInit');
 
-		// load and parse the track data from SoundCloud API
-		loadTracksData($player, links, opts.apiKey);
-		// init the player GUI, when the tracks data was laoded
-		$player.bind('onTrackDataLoaded.scPlayer', function(event) {
-			// log('onTrackDataLoaded.scPlayer', event.playerObj, playerId, event.target);
-			var tracks = event.playerObj.tracks;
-			if (opts.randomize) {
-			  	tracks = shuffle(tracks);
-			}
-			// create the playlist
-			$.each(tracks, function(index, track) {
-			  	var active = index === 0;
-				// create an item in the playlist
-				$('<li><a href="' + track.permalink_url +'">' + track.title + '</a><span class="sc-track-duration">' + timecode(track.duration) + '</span></li>').data('sc-track', {id:index}).toggleClass('active', active).prependTo($list);
-				// create an item in the artwork list
-				$('<li></li>')
-				.append(artworkImage(track, index >= opts.loadArtworks))
-				.appendTo($artworks)
-				.toggleClass('active', active)
-				.data('sc-track', track);
-			});
-			  // update the element before rendering it in the DOM
-			$player.each(function() {
-			  	if($.isFunction(opts.beforeRender)){
-			  		opts.beforeRender.call(this, tracks);
-			  	}
-			});
-			  // set the first track's duration
-			$('.sc-duration', $player)[0].innerHTML = timecode(tracks[0].duration);
-			$('.sc-position', $player)[0].innerHTML = timecode(0);
-			  // set up the first track info
-			updateTrackInfo($player, tracks[0]);
+		  // if auto play is enabled and it's the first player, start playing
+		if(opts.autoPlay && !didAutoPlay){
+		  	onPlay($player);
+		  	didAutoPlay = false;
+		}
 
-			  // if continous play enabled always skip to the next track after one finishes
-			if (opts.continuePlayback) {
-			  	$player.bind('onPlayerTrackFinish', function(event) {
-			  		onSkip($player);
-			  	});
-			}
-
-			  // announce the succesful initialization
-			$player
-			.removeClass('loading')
-			.trigger('onPlayerInit');
-
-			  // if auto play is enabled and it's the first player, start playing
-			if(opts.autoPlay && !didAutoPlay){
-			  	onPlay($player);
-			  	didAutoPlay = false;
-			}
-
-			//onPlay($player);
-			$('a.sc-play').trigger('click');
-		});
+		//onPlay($player);
+		$('a.sc-play').trigger('click');
+	});
 
 
 	// replace the DOM source (if there's one)

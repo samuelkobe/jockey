@@ -1,3 +1,9 @@
+/*-------------------------------------------------------
+
+    Scroll thing
+
+-------------------------------------------------------*/
+
 jQuery(function($) {
   if (!Modernizr.touch) { // if not a smartphone
     debiki.Utterscroll.enable({
@@ -150,15 +156,24 @@ function animateNav() {
 }
 
 function readyShareLinks() {
-	var currentUrl = window.location.href;
-	twitterUrl = "https://twitter.com/intent/tweet?url=" + currentUrl + ";text=You%27re%20invited%20to%20contribute%20to%20my%20playlist%20on;size=l&amp;count=none"
-	facebookUrl = "http://www.facebook.com/sharer/sharer.php?u=" + currentUrl;
-	gplusUrl = "https://plus.google.com/share?url=" + currentUrl;
-	$("#twitterLink").attr("href", twitterUrl);
-	$("#facebookLink").attr("href", facebookUrl);
-	$("#gplusLink").attr("href", gplusUrl);
-
-	$("#shareUrl").text(currentUrl);
+    var currentUrl = window.location.href;
+    jQuery.urlShortener({
+        longUrl: currentUrl,
+        success: function (shortUrl) {
+        	console.log(shortUrl);
+            twitterUrl = "https://twitter.com/intent/tweet?url=" + shortUrl + ";text=You%27re%20invited%20to%20contribute%20to%20my%20music%20playlist%20on%20Jockey!;size=l&amp;count=none"
+		    facebookUrl = "http://www.facebook.com/sharer/sharer.php?u=" + shortUrl;
+		    gplusUrl = "https://plus.google.com/share?url=" + shortUrl;
+		    $("#twitterLink").attr("href", twitterUrl);
+		    $("#facebookLink").attr("href", facebookUrl);
+		    $("#gplusLink").attr("href", gplusUrl);
+		    $("#shareUrl").text(shortUrl);
+        },
+        error: function(err)
+        {
+            alert(JSON.stringify(err));
+        }
+    });
 }
 
 /* ---------------------------
@@ -175,6 +190,7 @@ window.onload = function () {
 	resizeArtwork();
 	readyShareLinks();
 }
+
 
 $(document).ready(function() {
 	$('#draggable').scroll(function() {

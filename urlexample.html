@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://www.w3.org/TR/html4/strict.dtd">
+<html>
+<head>
+    <title>Jockey</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=9">
+
+    <!-- Load the RealTime libraries. -->
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
+
+
+    <!-- Setting styles, js & other meta tags -->
+    <link rel="stylesheet" href="css/style.css" />
+    <meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+    <meta content="utf-8" http-equiv="encoding">
+    <meta name="theme-color" content="#06D6A0">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="android-mobile-web-app-capable" content="yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+
+    <link rel="icon" type="image/png" href="images/favicon/favicon-32x32.png" sizes="32x32" />
+    <link rel="icon" type="image/png" href="images/favicon/favicon-16x16.png" sizes="16x16" />
+
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.8.3.min.js"></script>
+    <script type="text/javascript" src="js/jquery-ui.js"></script>
+
+  <!-- Load the utility library. -->
+  <script type="text/javascript" src="js/realtime-client-utils.js"></script>
+
+
+    <script type="text/javascript" src='js/urlshortener.js'></script>  
+
+    <link href='https://fonts.googleapis.com/css?family=Lato:400,700' rel='stylesheet' type='text/css'>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat:700' rel='stylesheet' type='text/css'>
+</head>
+
+<!-- Start RealTime when the body has loaded. -->
+<body>
+    <script>
+
+    $(document).ready(function() {
+
+        jQuery.urlShortener({
+            longUrl: "http://hayageek.com/jquery-url-shortener/",
+            success: function (shortUrl) {
+                console.log(shortUrl);
+            },
+            error: function(err)
+            {
+                alert(JSON.stringify(err));
+            }
+        });
+    });
+
+    function readyShareLinks() {
+        var currentUrl = window.location.href;
+        var shortenedUrl = '';
+
+        jQuery.urlShortener({
+            longUrl: "http://hayageek.com/jquery-url-shortener/",
+            success: function (shortUrl) {
+                shortenedUrl = shortUrl;
+            },
+            error: function(err)
+            {
+                alert(JSON.stringify(err));
+            }
+        });
+
+
+
+        twitterUrl = "https://twitter.com/intent/tweet?url=" + currentUrl + ";text=You%27re%20invited%20to%20contribute%20to%20my%20playlist%20on;size=l&amp;count=none"
+        facebookUrl = "http://www.facebook.com/sharer/sharer.php?u=" + currentUrl;
+        gplusUrl = "https://plus.google.com/share?url=" + currentUrl;
+        $("#twitterLink").attr("href", twitterUrl);
+        $("#facebookLink").attr("href", facebookUrl);
+        $("#gplusLink").attr("href", gplusUrl);
+
+        $("#shareUrl").text(currentUrl);
+    }
+
+    </script>
+
+</body>
+</html>
