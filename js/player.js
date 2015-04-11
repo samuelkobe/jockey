@@ -170,7 +170,7 @@ function readyShareLinks() {
         },
         error: function(err)
         {
-            alert(JSON.stringify(err));
+            console.log(JSON.stringify(err));
         }
     });
 }
